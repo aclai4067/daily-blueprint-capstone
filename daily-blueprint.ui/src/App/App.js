@@ -5,6 +5,7 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
+import MyNav from '../components/shared/MyNav/MyNav';
 import Home from '../components/pages/Home/Home';
 import Login from '../components/pages/Login/Login';
 import Pomodoro from '../components/pages/Pomodoro/Pomodoro';
@@ -27,6 +28,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
+          <MyNav authed={authed} />
           <Switch>
             <Route path="/login" exact component={() => <Login />} />
             <PrivateRoute path="/" exact component={() => <Home />} authed={authed} />
