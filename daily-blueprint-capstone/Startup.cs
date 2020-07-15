@@ -30,6 +30,7 @@ namespace daily_blueprint_capstone
             services.AddTransient<UsersRepo>();
             services.AddTransient<ToDosRepo>();
             services.AddTransient<TeamsRepo>();
+            services.AddTransient<PomodoroRepo>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
 

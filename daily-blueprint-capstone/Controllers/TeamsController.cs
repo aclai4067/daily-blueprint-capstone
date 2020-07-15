@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using daily_blueprint_capstone.DataAccessLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace daily_blueprint_capstone.Controllers
 {
-    [Route("api/users")]
+    [Route("api/teams")]
     [ApiController]
-
-    public class UsersController : ControllerBase
+    public class TeamsController : ControllerBase
     {
-        UsersRepo _repository;
+        TeamsRepo _repository;
 
-        public UsersController(UsersRepo repository)
+        public TeamsController(TeamsRepo repository)
         {
-            _repository= repository;
+            _repository = repository;
         }
     }
 }
