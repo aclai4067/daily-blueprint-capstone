@@ -9,8 +9,8 @@ import {
   NavbarToggler,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-// import firebase from 'firebase/app';
-// import 'firebase/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import PropTypes from 'prop-types';
 
 class MyNav extends React.Component {
@@ -26,8 +26,9 @@ class MyNav extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  logoutEvent = () => {
-    console.log('to implement on auth ticket');
+  logoutEvent = (e) => {
+    e.preventDefault();
+    firebase.auth().signOut();
   }
 
   render() {
