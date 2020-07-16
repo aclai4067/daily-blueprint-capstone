@@ -8,4 +8,6 @@ const getUserByFirebaseUid = (uid) => new Promise((resolve, reject) => {
     .catch((errFromUserData) => reject(errFromUserData));
 });
 
-export default { getUserByFirebaseUid };
+const createUser = (userObj) => axios.post(`${baseUrl}/newUser`, userObj);
+
+export default { getUserByFirebaseUid, createUser };
