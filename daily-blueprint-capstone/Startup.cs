@@ -60,6 +60,7 @@ namespace daily_blueprint_capstone
             services.AddTransient<ToDosRepo>();
             services.AddTransient<TeamsRepo>();
             services.AddTransient<PomodoroRepo>();
+            services.AddTransient<OrganizationsRepo>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
 
@@ -71,9 +72,13 @@ namespace daily_blueprint_capstone
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("ItsAllGood");
 
             app.UseAuthorization();
 

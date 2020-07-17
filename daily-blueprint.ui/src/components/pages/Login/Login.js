@@ -11,10 +11,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import googleLogo from './googCircleIcon.png';
 import NewUserModal from '../../shared/NewUserModal/NewUserModal';
+import orgData from '../../../helpers/data/orgData';
 
 class Login extends React.Component {
   state = {
     modalIsOpen: false,
+    organizations: [],
+  }
+
+  componentDidMount() {
+    orgData.getAllOrgs()
+      .then((results) => this.setState({ organizations: results.data }))
+      .catch((errorGettingOrgs) => console.error(errorGettingOrgs));
   }
 
   loginEvent = (e) => {
@@ -28,7 +36,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { modalIsOpen } = this.state;
+    const { modalIsOpen, organizations } = this.state;
 
     return (
       <div className='Login'>
@@ -55,7 +63,7 @@ class Login extends React.Component {
           <button className='btn btn-light' onClick={this.toggleModal}>Create A New Account</button>
           <button className='btn btn-light' onClick={this.loginEvent}><img src={googleLogo} className='googleIcon mr-2' alt='google icon' />Sign in with Google</button>
         </div>
-        <NewUserModal modalIsOpen={modalIsOpen} toggleModal={this.toggleModal} createUser={this.createUserEvent} />
+        <NewUserModal modalIsOpen={modalIsOpen} toggleModal={this.toggleModal} createUser={this.createUserEvent} organizations={organizations} />
       </div>
     );
   }
