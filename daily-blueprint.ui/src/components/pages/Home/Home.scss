@@ -1,0 +1,10 @@
+@import '../../../styles/variables';
+
+.Home{
+  color: $dbpNavy;
+
+  .dashboardCards{
+    border-radius: 5px;
+    border: 2px solid $dbpNavy;
+  }
+}
