@@ -58,5 +58,23 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return toDos;
             }
         }
+
+        public IEnumerable<TaggedToDos> GetTagsByUser(int userId)
+        {
+            var query = @"select (u.firstName + ' ' + u.lastName) as OwnerName, tg.id as TagId, tg.*, td.*  
+                        from tags tg
+                            join toDos td
+                            on tg.toDoId = td.id
+                            join users u
+                            on td.ownerUserId = u.id
+                        where tg.userId = @userId
+                        and td.isComplete = 0";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { UserId = userId };
+                return db.Query<TaggedToDos>(query, parameters);
+            }
+        }
     }
 }
