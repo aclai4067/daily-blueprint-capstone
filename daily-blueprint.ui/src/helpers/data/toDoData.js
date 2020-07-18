@@ -14,4 +14,10 @@ const getUserToDos = (userId) => new Promise((resolve, reject) => {
     .catch((errorFromGetUserToDos) => reject(errorFromGetUserToDos));
 });
 
-export default { getUserPriorities, getUserToDos };
+const getUserTags = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/tagged/user/${userId}`)
+    .then((priorities) => resolve(priorities))
+    .catch((errorFromGetUserTags) => reject(errorFromGetUserTags));
+});
+
+export default { getUserPriorities, getUserToDos, getUserTags };

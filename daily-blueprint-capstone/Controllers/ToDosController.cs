@@ -42,5 +42,17 @@ namespace daily_blueprint_capstone.Controllers
             }
             return Ok(toDos);
         }
+
+        [HttpGet("tagged/user/{userId}")]
+        public IActionResult GetUserTags(int userId)
+        {
+            var tags = _repository.GetTagsByUser(userId);
+            var isEmpty = !tags.Any();
+            if (isEmpty)
+            {
+                return NotFound("You have not been tagged in any open to do items");
+            }
+            return Ok(tags);
+        }
     }
 }
