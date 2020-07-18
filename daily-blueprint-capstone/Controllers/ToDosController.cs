@@ -18,5 +18,17 @@ namespace daily_blueprint_capstone.Controllers
         {
             _repository = repository;
         }
+
+        [HttpGet("priorities/user/{userId}")]
+        public IActionResult GetUserPriorities(int userId)
+        {
+            var priorities = _repository.GetPrioritiesByUser(userId);
+            var isEmpty = !priorities.Any();
+            if (isEmpty)
+            {
+                return NotFound("There are no open priorities for this user");
+            }
+            return Ok(priorities);
+        }
     }
 }
