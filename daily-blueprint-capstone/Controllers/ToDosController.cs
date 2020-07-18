@@ -30,5 +30,17 @@ namespace daily_blueprint_capstone.Controllers
             }
             return Ok(priorities);
         }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetUserToDos(int userId)
+        {
+            var toDos = _repository.GetToDosByUser(userId);
+            var isEmpty = !toDos.Any();
+            if (isEmpty)
+            {
+                return NotFound("There are no open to-do items for this user");
+            }
+            return Ok(toDos);
+        }
     }
 }

@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace daily_blueprint_capstone.Models
 {
-    public class PriorityDetails
+    public class ToDos
     {
-        public int PriorityId { get; set; }
-        public int ToDoId { get; set; }
-        public string Type { get; set; }
-        public DateTime PriorityDate { get; set; }
+        public int Id { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateDue { get; set; }
