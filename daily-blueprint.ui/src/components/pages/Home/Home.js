@@ -1,5 +1,6 @@
 import './Home.scss';
 import React from 'react';
+import Moment from 'react-moment';
 import UserShape from '../../../helpers/propz/UserShape';
 import toDoData from '../../../helpers/data/toDoData';
 import PriorityCard from '../../shared/PriorityCard/PriorityCard';
@@ -33,12 +34,19 @@ class Home extends React.Component {
   render() {
     const { priorities, toDos, tags } = this.state;
     const { user } = this.props;
-    const today = Date.now();
+    const today = new Date();
 
     return (
       <div className='Home'>
-        <h1>{today}</h1>
         <div className="personalToDos d-flex justify-content-around flex-wrap">
+          <h2 className='todaysDate text-left col-sm-7'><Moment format='LLLL'>{today}</Moment></h2>
+          <div className='userDetails col-sm-4 offset-sm-1 d-flex justify-content-end'>
+            <div className='userNameTitle text-right'>
+              <h4>{`${user.firstName} ${user.lastName}`}</h4>
+              <h6>{user.title}</h6>
+            </div>
+            <img className='profilePhoto' src={user.imageUrl} alt={user.name} />
+          </div>
           <div className='col-sm-6 m-1'>
             <div className='dashboardCards col-12'>
               <PriorityCard priorities={priorities} />

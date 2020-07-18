@@ -3,6 +3,22 @@
 .Home{
   color: $dbpNavy;
 
+  .todaysDate{
+    height: 2em;
+  }
+
+  .profilePhoto{
+    border: 1px solid $translucentCream;
+    border-radius: 999px;
+    margin: .5em;
+    height: 100px;
+    width: 100px;
+  }
+
+  .userNameTitle{
+    margin: auto 1em;
+  }
+
   .dashboardCards{
     background-color: $translucentCream;
     border-radius: 5px;
