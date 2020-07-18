@@ -8,4 +8,10 @@ const getUserPriorities = (userId) => new Promise((resolve, reject) => {
     .catch((errorFromGetUserPriorities) => reject(errorFromGetUserPriorities));
 });
 
-export default { getUserPriorities };
+const getUserToDos = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/user/${userId}`)
+    .then((priorities) => resolve(priorities))
+    .catch((errorFromGetUserToDos) => reject(errorFromGetUserToDos));
+});
+
+export default { getUserPriorities, getUserToDos };

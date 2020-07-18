@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-expressions */
+/* eslint-disable react/jsx-no-target-blank */
 import './PriorityCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
