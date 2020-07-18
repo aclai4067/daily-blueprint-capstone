@@ -6,7 +6,7 @@ import ToDoShape from '../../../helpers/propz/ToDoShape';
 
 class ToDoCard extends React.Component {
   static propTypes = {
-    priorities: PropTypes.arrayOf(ToDoShape.toDoShape),
+    toDos: PropTypes.arrayOf(ToDoShape.toDoShape),
   }
 
   render() {
