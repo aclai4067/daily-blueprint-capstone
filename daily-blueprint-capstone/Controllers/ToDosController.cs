@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using daily_blueprint_capstone.DataAccessLayer;
+using daily_blueprint_capstone.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,6 +54,28 @@ namespace daily_blueprint_capstone.Controllers
                 return NotFound("You have not been tagged in any open to do items");
             }
             return Ok(tags);
+        }
+
+        [HttpPost("new")]
+        public IActionResult CreateToDo(ToDos toDo)
+        {
+            var newToDo = _repository.SaveToDo(toDo);
+            if (newToDo == null)
+            {
+                return NotFound("There was a problem saving your to-do item");
+            }
+            return Ok(newToDo);
+        }
+
+        [HttpPost("new/priority")]
+        public IActionResult CreatePriority(Priorities priority)
+        {
+            var newPriority = _repository.SavePriority(priority);
+            if (newPriority == null)
+            {
+                return NotFound("There was a problem saving your to-do item");
+            }
+            return Ok(newPriority);
         }
     }
 }

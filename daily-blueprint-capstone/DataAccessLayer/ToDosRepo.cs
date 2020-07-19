@@ -76,5 +76,29 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.Query<TaggedToDos>(query, parameters);
             }
         }
+
+        public ToDos SaveToDo(ToDos toDoToAdd)
+        {
+            var query = @"insert into ToDos(Description, DateCreated, DateDue, OwnerUserId, isComplete, Link)
+                        output inserted.*
+                        values(@Description, @DateCreated, @DateDue, @OwnerUserId, @isComplete, @Link)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<ToDos>(query, toDoToAdd);
+            }
+        }
+
+        public Priorities SavePriority(Priorities priorityToAdd)
+        {
+            var query = @"insert into Priorities(ToDoId, Type, PriorityDate)
+                        output inserted.*
+                        values(@ToDoId, @Type, @PriorityDate)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<Priorities>(query, priorityToAdd);
+            }
+        }
     }
 }
