@@ -11,7 +11,12 @@ class ToDoCard extends React.Component {
   }
 
   render() {
-    const { toDos, toggleToDoModal } = this.props;
+    const { toDos, toggleToDoModal, setFromPriority } = this.props;
+
+    const launchToDoModal = () => {
+      setFromPriority(false);
+      toggleToDoModal();
+    };
 
     const buildToDos = toDos.map((t) => <div key={`toDo-${t.id}`} className='d-flex justify-content-between' >
         <form className='col-sm-9'>
@@ -26,7 +31,7 @@ class ToDoCard extends React.Component {
         <h3>To Do</h3>
         {buildToDos}
         <div className='d-flex justify-content-end'>
-          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={toggleToDoModal} >New</button>
+          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={launchToDoModal} >New</button>
         </div>
       </div>
     );

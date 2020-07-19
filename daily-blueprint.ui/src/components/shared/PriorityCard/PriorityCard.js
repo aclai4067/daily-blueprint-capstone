@@ -12,7 +12,12 @@ class PriorityCard extends React.Component {
   }
 
   render() {
-    const { priorities, toggleToDoModal } = this.props;
+    const { priorities, toggleToDoModal, setFromPriority } = this.props;
+
+    const launchToDoModal = () => {
+      setFromPriority(true);
+      toggleToDoModal();
+    };
 
     const buildDailyPriorities = priorities.map((p) => p.type === 'daily' && <div key={`priority-${p.priorityId}`} className='d-flex justify-content-between' >
         <form className='col-sm-9'>
@@ -38,7 +43,7 @@ class PriorityCard extends React.Component {
         <h5 className='text-left'>Weekly</h5>
         {buildWeeklyPriorities}
         <div className='d-flex justify-content-end'>
-          <button className='btn btn-outline-dark pt-0 pb-0 m-1' fromPriority={true} onClick={toggleToDoModal} >New</button>
+          <button className='btn btn-outline-dark pt-0 pb-0 m-1' onClick={launchToDoModal} >New</button>
         </div>
       </div>
     );

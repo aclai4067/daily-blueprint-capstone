@@ -40,6 +40,16 @@ class ToDoModal extends React.Component {
     this.setState({ toDo: tempToDo });
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.fromPriority !== prevProps.fromPriority) {
+      if (this.props.fromPriority === true) {
+        const tempPriority = { ...this.state.priority };
+        tempPriority.type = 'daily';
+        this.setState({ priority: tempPriority });
+      }
+    }
+  }
+
   clearForm = () => {
     const { userId } = this.props;
     const currentDate = Moment().format();

@@ -14,6 +14,7 @@ class Home extends React.Component {
     toDos: [],
     tags: [],
     toDoModalIsOpen: false,
+    fromPriority: false,
   }
 
   static propTypes = {
@@ -45,12 +46,18 @@ class Home extends React.Component {
     this.setState({ toDoModalIsOpen: !this.state.toDoModalIsOpen });
   }
 
+  setFromPriority = (status) => {
+    this.setState({ fromPriority: status });
+  }
+
   render() {
     const {
       priorities,
       toDos,
       tags,
       toDoModalIsOpen,
+      fromPriority,
+      setFromPriority,
     } = this.state;
     const { user } = this.props;
     const today = new Date();
@@ -68,17 +75,17 @@ class Home extends React.Component {
           </div>
           <div className='col-sm-6 m-1'>
             <div className='dashboardCards col-12'>
-              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} />
+              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
               <TaggedCard tags={tags}></TaggedCard>
             </div>
           </div>
           <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} />
+            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} />
           </div>
         </div>
-        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
+        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
       </div>
     );
   }
