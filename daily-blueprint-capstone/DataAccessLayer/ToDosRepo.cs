@@ -122,5 +122,26 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.QueryFirstOrDefault<Priorities>(query, priorityToAdd);
             }
         }
+
+        public List<TeamPriorities> GetPrioritiesByTeamId(int teamId)
+        {
+            var query = @"select *
+                        from TeamMembers TM
+	                        join Users U
+	                        on TM.UserId = U.Id
+                        where TM.TeamId = @TeamId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { TeamId = teamId };
+                var getTeam = db.Query<TeamPriorities>(query, parameters).ToList();
+                foreach (var user in getTeam)
+                {
+                    var priorities = GetPrioritiesByUser(user.UserId).ToList();
+                    user.memberPriorities = priorities;
+                }
+                return getTeam;
+            }
+        }
     }
 }
