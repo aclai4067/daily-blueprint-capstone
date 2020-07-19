@@ -57,7 +57,6 @@ class Home extends React.Component {
       tags,
       toDoModalIsOpen,
       fromPriority,
-      setFromPriority,
     } = this.state;
     const { user } = this.props;
     const today = new Date();
