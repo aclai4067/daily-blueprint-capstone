@@ -6,12 +6,15 @@ import toDoData from '../../../helpers/data/toDoData';
 import PriorityCard from '../../shared/PriorityCard/PriorityCard';
 import ToDoCard from '../../shared/ToDoCard/ToDoCard';
 import TaggedCard from '../../shared/TaggedCard/TaggedCard';
+import ToDoModal from '../../shared/ToDoModal/ToDoModal';
 
 class Home extends React.Component {
   state = {
     priorities: [],
     toDos: [],
     tags: [],
+    toDoModalIsOpen: false,
+    fromPriority: false,
   }
 
   static propTypes = {
@@ -20,19 +23,42 @@ class Home extends React.Component {
 
   componentDidMount() {
     const { user } = this.props;
-    toDoData.getUserPriorities(user.id)
+    this.getUserToDoAndPriorities(user.id);
+    this.getUserTaggedToDos(user.id);
+  }
+
+  getUserToDoAndPriorities = (userId) => {
+    toDoData.getUserPriorities(userId)
       .then((results) => this.setState({ priorities: results.data }))
       .catch((ErrorFromHomeGetPriorities) => console.error(ErrorFromHomeGetPriorities));
-    toDoData.getUserToDos(user.id)
+    toDoData.getUserToDos(userId)
       .then((toDoResults) => this.setState({ toDos: toDoResults.data }))
       .catch((ErrorFromHomeGetTodos) => console.error(ErrorFromHomeGetTodos));
-    toDoData.getUserTags(user.id)
+  }
+
+  getUserTaggedToDos = (userId) => {
+    toDoData.getUserTags(userId)
       .then((tagResults) => this.setState({ tags: tagResults.data }))
       .catch((ErrorFromHomeGetTags) => console.error(ErrorFromHomeGetTags));
   }
 
+  toggleToDoModal = () => {
+    this.setState({ toDoModalIsOpen: !this.state.toDoModalIsOpen });
+  }
+
+  setFromPriority = (status) => {
+    this.setState({ fromPriority: status });
+  }
+
   render() {
-    const { priorities, toDos, tags } = this.state;
+    const {
+      priorities,
+      toDos,
+      tags,
+      toDoModalIsOpen,
+      fromPriority,
+      setFromPriority,
+    } = this.state;
     const { user } = this.props;
     const today = new Date();
 
@@ -49,16 +75,17 @@ class Home extends React.Component {
           </div>
           <div className='col-sm-6 m-1'>
             <div className='dashboardCards col-12'>
-              <PriorityCard priorities={priorities} />
+              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
               <TaggedCard tags={tags}></TaggedCard>
             </div>
           </div>
           <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} />
+            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} />
           </div>
         </div>
+        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
       </div>
     );
   }
