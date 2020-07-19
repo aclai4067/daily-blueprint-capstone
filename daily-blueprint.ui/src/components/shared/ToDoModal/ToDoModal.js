@@ -24,30 +24,72 @@ class ToDoModal extends React.Component {
 
   static propTypes = {
     toDoModalIsOpen: PropTypes.bool,
+    fromPriority: PropTypes.bool,
     toggleToDoModal: PropTypes.func,
+    updateToDos: PropTypes.func,
     userId: PropTypes.number,
+  }
+
+  componentDidMount() {
+    const { userId } = this.props;
+    const { toDo } = this.state;
+    const currentDate = Moment().format();
+    const tempToDo = { ...toDo };
+    tempToDo.dateCreated = currentDate;
+    tempToDo.ownerUserId = userId;
+    this.setState({ toDo: tempToDo });
+  }
+
+  clearForm = () => {
+    const { userId } = this.props;
+    const currentDate = Moment().format();
+    const clearToDo = {
+      description: '',
+      dateCreated: currentDate,
+      dateDue: '',
+      ownerUserId: userId,
+      isComplete: false,
+      link: '',
+    };
+    const clearPriority = {
+      toDoId: '',
+      type: '',
+      priorityDate: '',
+    };
+    this.setState({ toDo: clearToDo, priority: clearPriority });
+  }
+
+  resetOnSubmit = (userId) => {
+    const { toggleToDoModal, updateToDos } = this.props;
+    this.clearForm();
+    updateToDos(userId);
+    toggleToDoModal();
+  }
+
+  resetOnDismiss = () => {
+    const { toggleToDoModal } = this.props;
+    this.clearForm();
+    toggleToDoModal();
   }
 
   createToDoEvent = (e) => {
     e.preventDefault();
-    const { toggleToDoModal, userId } = this.props;
+    const { userId } = this.props;
     const { toDo, priority } = this.state;
-    const tempToDo = { ...toDo };
     const currentDate = Moment().format();
-    tempToDo.dateCreated = currentDate;
-    tempToDo.ownerUserId = userId;
-    this.setState({ toDo: tempToDo });
     toDoData.createToDo(toDo)
       .then((result) => {
         if (priority.type !== '') {
           const tempPriority = { ...priority };
-          tempPriority.toDoId = result.id;
+          tempPriority.toDoId = result.data.id;
           tempPriority.priorityDate = currentDate;
           this.setState({ priority: tempPriority });
-          toDoData.createPriority(priority);
+          toDoData.createPriority(this.state.priority)
+            .then(() => this.resetOnSubmit(userId));
+        } else {
+          this.resetOnSubmit(userId);
         }
       }).catch((errorFromCreateToDo) => console.error(errorFromCreateToDo));
-    toggleToDoModal();
   }
 
   descriptionChange = (e) => {
@@ -122,7 +164,7 @@ class ToDoModal extends React.Component {
               </div>
               <div className='d-flex justify-content-between'>
                 <Button className='addToDoBtn' onClick={this.createToDoEvent}>Save</Button>{' '}
-                <Button className='dismissModal' onClick={toggleToDoModal}>Cancel</Button>
+                <Button className='dismissModal' onClick={this.resetOnDismiss}>Cancel</Button>
               </div>
             </form>
           </ModalBody>

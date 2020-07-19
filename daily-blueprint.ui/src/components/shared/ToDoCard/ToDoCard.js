@@ -14,11 +14,11 @@ class ToDoCard extends React.Component {
     const { toDos, toggleToDoModal } = this.props;
 
     const buildToDos = toDos.map((t) => <div key={`toDo-${t.id}`} className='d-flex justify-content-between' >
-        <form>
-          <input className='col-1' type='checkbox' />
+        <form className='col-sm-9'>
+          <input className='col-1 completeCheck' type='checkbox' />
           <label className='col-11 text-left' htmlFor={`check-t-${t.id}`}>{t.description} { t.link !== '' && <span>({<a href={t.link} target='_blank'>Resource</a>})</span> }</label>
         </form>
-        <p className='text-right'>{t.dateDue}</p>
+        <p className='text-right col-sm-3'>{t.dateDue}</p>
       </div>);
 
     return (

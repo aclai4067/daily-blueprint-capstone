@@ -22,13 +22,21 @@ class Home extends React.Component {
 
   componentDidMount() {
     const { user } = this.props;
-    toDoData.getUserPriorities(user.id)
+    this.getUserToDoAndPriorities(user.id);
+    this.getUserTaggedToDos(user.id);
+  }
+
+  getUserToDoAndPriorities = (userId) => {
+    toDoData.getUserPriorities(userId)
       .then((results) => this.setState({ priorities: results.data }))
       .catch((ErrorFromHomeGetPriorities) => console.error(ErrorFromHomeGetPriorities));
-    toDoData.getUserToDos(user.id)
+    toDoData.getUserToDos(userId)
       .then((toDoResults) => this.setState({ toDos: toDoResults.data }))
       .catch((ErrorFromHomeGetTodos) => console.error(ErrorFromHomeGetTodos));
-    toDoData.getUserTags(user.id)
+  }
+
+  getUserTaggedToDos = (userId) => {
+    toDoData.getUserTags(userId)
       .then((tagResults) => this.setState({ tags: tagResults.data }))
       .catch((ErrorFromHomeGetTags) => console.error(ErrorFromHomeGetTags));
   }
@@ -70,7 +78,7 @@ class Home extends React.Component {
             <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} />
           </div>
         </div>
-        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} toggleToDoModal={this.toggleToDoModal} userId={user.id} ></ToDoModal>
+        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
       </div>
     );
   }
