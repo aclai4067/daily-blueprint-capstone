@@ -20,4 +20,14 @@ const getUserTags = (userId) => new Promise((resolve, reject) => {
     .catch((errorFromGetUserTags) => reject(errorFromGetUserTags));
 });
 
-export default { getUserPriorities, getUserToDos, getUserTags };
+const createToDo = (toDoObj) => axios.post(`${baseUrl}/new`, toDoObj);
+
+const createPriority = (priorityObj) => axios.post(`${baseUrl}/new/priority`, priorityObj);
+
+export default {
+  getUserPriorities,
+  getUserToDos,
+  getUserTags,
+  createToDo,
+  createPriority,
+};

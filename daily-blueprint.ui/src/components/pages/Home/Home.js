@@ -6,12 +6,14 @@ import toDoData from '../../../helpers/data/toDoData';
 import PriorityCard from '../../shared/PriorityCard/PriorityCard';
 import ToDoCard from '../../shared/ToDoCard/ToDoCard';
 import TaggedCard from '../../shared/TaggedCard/TaggedCard';
+import ToDoModal from '../../shared/ToDoModal/ToDoModal';
 
 class Home extends React.Component {
   state = {
     priorities: [],
     toDos: [],
     tags: [],
+    toDoModalIsOpen: false,
   }
 
   static propTypes = {
@@ -31,8 +33,17 @@ class Home extends React.Component {
       .catch((ErrorFromHomeGetTags) => console.error(ErrorFromHomeGetTags));
   }
 
+  toggleToDoModal = () => {
+    this.setState({ toDoModalIsOpen: !this.state.toDoModalIsOpen });
+  }
+
   render() {
-    const { priorities, toDos, tags } = this.state;
+    const {
+      priorities,
+      toDos,
+      tags,
+      toDoModalIsOpen,
+    } = this.state;
     const { user } = this.props;
     const today = new Date();
 
@@ -49,16 +60,17 @@ class Home extends React.Component {
           </div>
           <div className='col-sm-6 m-1'>
             <div className='dashboardCards col-12'>
-              <PriorityCard priorities={priorities} />
+              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
               <TaggedCard tags={tags}></TaggedCard>
             </div>
           </div>
           <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} />
+            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} />
           </div>
         </div>
+        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} toggleToDoModal={this.toggleToDoModal} userId={user.id} ></ToDoModal>
       </div>
     );
   }

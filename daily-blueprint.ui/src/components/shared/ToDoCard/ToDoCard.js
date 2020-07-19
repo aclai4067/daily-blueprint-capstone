@@ -7,10 +7,11 @@ import ToDoShape from '../../../helpers/propz/ToDoShape';
 class ToDoCard extends React.Component {
   static propTypes = {
     toDos: PropTypes.arrayOf(ToDoShape.toDoShape),
+    toggleToDoModal: PropTypes.func,
   }
 
   render() {
-    const { toDos } = this.props;
+    const { toDos, toggleToDoModal } = this.props;
 
     const buildToDos = toDos.map((t) => <div key={`toDo-${t.id}`} className='d-flex justify-content-between' >
         <form>
@@ -24,6 +25,9 @@ class ToDoCard extends React.Component {
       <div className='ToDoCard'>
         <h3>To Do</h3>
         {buildToDos}
+        <div className='d-flex justify-content-end'>
+          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={toggleToDoModal} >New</button>
+        </div>
       </div>
     );
   }

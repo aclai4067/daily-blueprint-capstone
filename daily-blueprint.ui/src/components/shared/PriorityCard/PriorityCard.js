@@ -8,10 +8,11 @@ import PriorityShape from '../../../helpers/propz/PriorityShape';
 class PriorityCard extends React.Component {
   static propTypes = {
     priorities: PropTypes.arrayOf(PriorityShape.priorityShape),
+    toggleToDoModal: PropTypes.func,
   }
 
   render() {
-    const { priorities } = this.props;
+    const { priorities, toggleToDoModal } = this.props;
 
     const buildDailyPriorities = priorities.map((p) => p.type === 'daily' && <div key={`priority-${p.priorityId}`} className='d-flex justify-content-between' >
         <form>
@@ -36,6 +37,9 @@ class PriorityCard extends React.Component {
         {buildDailyPriorities}
         <h5 className='text-left'>Weekly</h5>
         {buildWeeklyPriorities}
+        <div className='d-flex justify-content-end'>
+          <button className='btn btn-outline-dark pt-0 pb-0 m-1' onClick={toggleToDoModal} >New</button>
+        </div>
       </div>
     );
   }

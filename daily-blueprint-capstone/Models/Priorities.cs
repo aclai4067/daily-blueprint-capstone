@@ -10,6 +10,6 @@ namespace daily_blueprint_capstone.Models
         public int Id { get; set; }
         public int ToDoId { get; set; }
         public string Type { get; set; }
-        public DateTime PriorityDate { get; set; }
+        public string PriorityDate { get; set; }
     }
 }
