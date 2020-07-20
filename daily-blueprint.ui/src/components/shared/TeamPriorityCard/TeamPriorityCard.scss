@@ -1,11 +1,18 @@
 @import '../../../styles/variables';
 
 .TeamPriorityCard{
-
-  .teamMemberImage{
+    background-color: $translucentCream;
     border-radius: 5px;
-    border: 1px solid $translucentCream;
-    max-height: 100px;
-    max-width: 100px;
-  }
+    border: 2px solid $dbpNavy;
+
+    .userDetails{
+      margin: auto 0;
+
+      .teamMemberImage{
+        border-radius: 5px;
+        border: 1px solid $translucentCream;
+        max-height: 200px;
+        max-width: 200px;
+      }
+    }
 }
