@@ -18,5 +18,17 @@ namespace daily_blueprint_capstone.Controllers
         {
             _repository = repository;
         }
+
+        [HttpGet("user/{userId}")]
+        public IActionResult GetTeamsByUserId(int userId)
+        {
+            var userTeams = _repository.GetTeamsByUser(userId);
+            var isEmpty = !userTeams.Any();
+            if (isEmpty)
+            {
+                return NotFound("You have not been assigned to any teams.  Please contact your team lead.");
+            }
+            return Ok(userTeams);
+        }
     }
 }
