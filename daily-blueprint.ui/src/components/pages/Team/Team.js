@@ -1,5 +1,6 @@
 import './Team.scss';
 import React from 'react';
+import Moment from 'moment';
 import teamsData from '../../../helpers/data/teamsData';
 import UserShape from '../../../helpers/propz/UserShape';
 import toDoData from '../../../helpers/data/toDoData';
@@ -35,12 +36,16 @@ class Team extends React.Component {
 
   render() {
     const { teamToDisplay, teamPriorities } = this.state;
+    const currentDate = Moment().format('LLLL');
 
-    const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard teamPriorities={p} />);
+    const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard key={`member-${p.userId}`} teamPriorities={p} />);
 
     return (
       <div className='Team'>
-        <h1>Team</h1>
+        <div className='d-flex justify-content-between flex-wrap'>
+          <h2 className='todaysDate text-left col-sm-7'>{currentDate}</h2>
+          <h2>{teamToDisplay.teamName}</h2>
+        </div>
         {buildMemberPriorityCards}
       </div>
     );
