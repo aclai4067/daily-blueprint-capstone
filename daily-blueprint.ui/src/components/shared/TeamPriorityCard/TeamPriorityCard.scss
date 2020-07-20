@@ -1,0 +1,11 @@
+@import '../../../styles/variables';
+
+.TeamPriorityCard{
+
+  .teamMemberImage{
+    border-radius: 5px;
+    border: 1px solid $translucentCream;
+    max-height: 100px;
+    max-width: 100px;
+  }
+}

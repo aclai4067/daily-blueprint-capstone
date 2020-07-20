@@ -3,6 +3,7 @@ import React from 'react';
 import teamsData from '../../../helpers/data/teamsData';
 import UserShape from '../../../helpers/propz/UserShape';
 import toDoData from '../../../helpers/data/toDoData';
+import TeamPriorityCard from '../../shared/TeamPriorityCard/TeamPriorityCard';
 
 class Team extends React.Component {
   state = {
@@ -33,9 +34,14 @@ class Team extends React.Component {
   };
 
   render() {
+    const { teamToDisplay, teamPriorities } = this.state;
+
+    const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard teamPriorities={p} />);
+
     return (
       <div className='Team'>
         <h1>Team</h1>
+        {buildMemberPriorityCards}
       </div>
     );
   }
