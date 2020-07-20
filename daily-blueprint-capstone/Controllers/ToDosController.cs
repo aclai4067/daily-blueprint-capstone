@@ -77,5 +77,17 @@ namespace daily_blueprint_capstone.Controllers
             }
             return Ok(newPriority);
         }
+
+        [HttpGet("team/{teamId}")]
+        public IActionResult GetPrioritiesByTeam(int teamId)
+        {
+            var teamPriorities = _repository.GetPrioritiesByTeamId(teamId);
+            var isEmpty = !teamPriorities.Any();
+            if (isEmpty)
+            {
+                return NotFound("Looks like no one has been assigned to this team yet");
+            }
+            return Ok(teamPriorities);
+        }
     }
 }

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import UserShape from './UserShape';
 
 const priorityShape = PropTypes.shape({
   priorityId: PropTypes.number,
@@ -11,6 +12,7 @@ const priorityShape = PropTypes.shape({
   ownerUserId: PropTypes.number.isRequired,
   isComplete: PropTypes.bool.isRequired,
   link: PropTypes.string.isRequired,
+  taggedUsers: PropTypes.arrayOf(UserShape.userShape),
 });
 
 export default { priorityShape };

@@ -61,7 +61,7 @@ class App extends React.Component {
           <Switch>
             <PublicRoute path="/login" exact component={() => <Login />} authed={authed} />
             <PrivateRoute path="/" exact component={() => <Home user={user} />} authed={authed} />
-            <PrivateRoute path="/team" exact component={() => <Team />} authed={authed} />
+            <PrivateRoute path="/team" exact component={() => <Team user={user} />} authed={authed} />
             <PrivateRoute path="/pomodoro" exact component={() => <Pomodoro />} authed={authed} />
           </Switch>
         </Router>

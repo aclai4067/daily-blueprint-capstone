@@ -17,6 +17,22 @@ namespace daily_blueprint_capstone.DataAccessLayer
             ConnectionString = config.GetConnectionString("DailyBlueprint");
         }
 
+        public List<Users> GetTaggedUsersByToDoId(int toDoId)
+        {
+            var query = @"select users.*
+                        from Users
+	                        join Tags
+	                        on Tags.UserId = Users.Id
+                        where Tags.ToDoId = @ToDoId";
+
+            using(var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { ToDoId = toDoId };
+                var taggedUsers = db.Query<Users>(query, parameters);
+                return taggedUsers.ToList();
+            }
+        }
+
         public IEnumerable<PriorityDetails> GetPrioritiesByUser(int userId)
         {
             var query = @"select p.id as priorityId, p.*, t.*
@@ -29,7 +45,13 @@ namespace daily_blueprint_capstone.DataAccessLayer
             using(var db = new SqlConnection(ConnectionString))
             {
                 var parameters = new { UserId = userId };
-                return db.Query<PriorityDetails>(query, parameters);
+                var userPriorities = db.Query<PriorityDetails>(query, parameters).ToList();
+                foreach (var p in userPriorities)
+                {
+                    var tagged = GetTaggedUsersByToDoId(p.ToDoId);
+                    p.TaggedUsers = tagged;
+                }
+                return userPriorities;
             }
         }
 
@@ -98,6 +120,27 @@ namespace daily_blueprint_capstone.DataAccessLayer
             using (var db = new SqlConnection(ConnectionString))
             {
                 return db.QueryFirstOrDefault<Priorities>(query, priorityToAdd);
+            }
+        }
+
+        public List<TeamPriorities> GetPrioritiesByTeamId(int teamId)
+        {
+            var query = @"select *
+                        from TeamMembers TM
+	                        join Users U
+	                        on TM.UserId = U.Id
+                        where TM.TeamId = @TeamId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { TeamId = teamId };
+                var getTeam = db.Query<TeamPriorities>(query, parameters).ToList();
+                foreach (var user in getTeam)
+                {
+                    var priorities = GetPrioritiesByUser(user.UserId).ToList();
+                    user.memberPriorities = priorities;
+                }
+                return getTeam;
             }
         }
     }
