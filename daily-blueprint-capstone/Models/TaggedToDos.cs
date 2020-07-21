@@ -11,8 +11,8 @@ namespace daily_blueprint_capstone.Models
         public int UserId { get; set; }
         public int ToDoId { get; set; }
         public string Description { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateDue { get; set; }
+        public string DateCreated { get; set; }
+        public string DateDue { get; set; }
         public int OwnerUserId { get; set; }
         public bool isComplete { get; set; }
         public string Link { get; set; }

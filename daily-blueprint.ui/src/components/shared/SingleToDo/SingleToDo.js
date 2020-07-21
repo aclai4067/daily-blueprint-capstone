@@ -2,16 +2,18 @@
 import './SingleToDo.scss';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { faUserTag, faEdit } from '@fortawesome/free-solid-svg-icons';
+import Moment from 'moment';
 
 class SingleToDo extends React.Component {
   render() {
     const { toDo, setFromPriority } = this.props;
+    const dueDate = Moment(toDo.dateDue).format('MM/DD/YY');
 
     return (
-      <div className='d-flex justify-content-between'>
+      <div className='SingleToDo d-flex justify-content-between'>
         { setFromPriority ? [
-          <form className='col-sm-9'>
+          <form className='col-sm-8'>
             <input className='col-1 completeCheck' type='checkbox' id={`completePriority-${toDo.priorityId}`} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.priorityId}`}>
               {toDo.description}
@@ -23,11 +25,12 @@ class SingleToDo extends React.Component {
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.id}`}>
             {toDo.description}
             { toDo.link !== '' && <span>({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
-            {/* { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> } */}
+            { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> }
             </label>
           </form>]
         }
-      <p className='text-right col-sm-3'>{toDo.dateDue}</p>
+      <p className='text-right col-sm-3'>{dueDate}</p>
+      <button className='editButton btn close col-1'><FontAwesomeIcon className='editIcon' icon={faEdit} /></button>
       </div>
     );
   }

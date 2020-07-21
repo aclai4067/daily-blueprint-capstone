@@ -64,7 +64,7 @@ class Home extends React.Component {
     return (
       <div className='Home'>
         <div className="personalToDos d-flex justify-content-around flex-wrap">
-          <h2 className='todaysDate text-left col-sm-7'><Moment format='LLLL'>{today}</Moment></h2>
+          <h2 className='todaysDate text-left col-sm-7'><Moment format='dddd, LL'>{today}</Moment></h2>
           <div className='userDetails col-sm-4 offset-sm-1 d-flex justify-content-end'>
             <div className='userNameTitle text-right'>
               <h4>{`${user.firstName} ${user.lastName}`}</h4>

@@ -89,5 +89,33 @@ namespace daily_blueprint_capstone.Controllers
             }
             return Ok(teamPriorities);
         }
+
+        [HttpPut("update")]
+        public IActionResult UpdatePriority(ToDos toDoToUpdate)
+        {
+            var updatedToDo = _repository.UpdateToDo(toDoToUpdate);
+            return Ok(updatedToDo);
+        }
+
+        [HttpPut("update/priority")]
+        public IActionResult UpdatePriority(PriorityDetails priorityToUpdate)
+        {
+            if (priorityToUpdate.Type == "daily" || priorityToUpdate.Type == "weekly")
+            {
+                _repository.ChangePriorityType(priorityToUpdate.PriorityId, priorityToUpdate.Type);
+            }
+            else
+            {
+                _repository.DeletePriority(priorityToUpdate.PriorityId);
+            }
+            var ToDoToUpdate = new ToDos();
+            ToDoToUpdate.Id = priorityToUpdate.ToDoId;
+            ToDoToUpdate.Description = priorityToUpdate.Description;
+            ToDoToUpdate.DateDue = priorityToUpdate.DateDue;
+            ToDoToUpdate.Link = priorityToUpdate.Link;
+            ToDoToUpdate.isComplete = priorityToUpdate.isComplete;
+            var updatedToDo = _repository.UpdateToDo(ToDoToUpdate);
+            return Ok(updatedToDo);
+        }
     }
 }
