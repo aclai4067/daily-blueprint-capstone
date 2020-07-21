@@ -3,6 +3,7 @@ import './ToDoCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ToDoShape from '../../../helpers/propz/ToDoShape';
+import SingleToDo from '../SingleToDo/SingleToDo';
 
 class ToDoCard extends React.Component {
   static propTypes = {
@@ -18,13 +19,7 @@ class ToDoCard extends React.Component {
       toggleToDoModal();
     };
 
-    const buildToDos = toDos.map((t) => <div key={`toDo-${t.id}`} className='d-flex justify-content-between' >
-        <form className='col-sm-9'>
-          <input className='col-1 completeCheck' type='checkbox' />
-          <label className='col-11 text-left' htmlFor={`check-t-${t.id}`}>{t.description} { t.link !== '' && <span>({<a href={t.link} target='_blank'>Resource</a>})</span> }</label>
-        </form>
-        <p className='text-right col-sm-3'>{t.dateDue}</p>
-      </div>);
+    const buildToDos = toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} />);
 
     return (
       <div className='ToDoCard'>
