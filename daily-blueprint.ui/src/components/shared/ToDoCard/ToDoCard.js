@@ -11,22 +11,26 @@ class ToDoCard extends React.Component {
     toggleToDoModal: PropTypes.func,
   }
 
+  launchToDoModal = () => {
+    const { toggleToDoModal, setFromPriority } = this.props;
+    setFromPriority(false);
+    toggleToDoModal();
+  };
+
   render() {
-    const { toDos, toggleToDoModal, setFromPriority } = this.props;
+    const {
+      toDos,
+      setEditMode,
+    } = this.props;
 
-    const launchToDoModal = () => {
-      setFromPriority(false);
-      toggleToDoModal();
-    };
-
-    const buildToDos = toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} />);
+    const buildToDos = toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} setEditMode={setEditMode} />);
 
     return (
       <div className='ToDoCard'>
         <h3>To Do</h3>
         {buildToDos}
         <div className='d-flex justify-content-end'>
-          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={launchToDoModal} >New</button>
+          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>
         </div>
       </div>
     );

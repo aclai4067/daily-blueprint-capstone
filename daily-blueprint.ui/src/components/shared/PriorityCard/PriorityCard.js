@@ -11,22 +11,24 @@ class PriorityCard extends React.Component {
     toggleToDoModal: PropTypes.func,
   }
 
+  launchToDoModal = () => {
+    const { toggleToDoModal, setFromPriority } = this.props;
+    setFromPriority(true);
+    toggleToDoModal();
+  };
+
   render() {
     const {
       priorities,
-      toggleToDoModal,
-      setFromPriority,
       teamView,
+      setEditMode,
     } = this.props;
 
-    const launchToDoModal = () => {
-      setFromPriority(true);
-      toggleToDoModal();
-    };
+    const buildDailyPriorities = priorities.map((p) => p.type === 'daily'
+    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} />);
 
-    const buildDailyPriorities = priorities.map((p) => p.type === 'daily' && <SingleToDo key={`priority-${p.priorityId}`} setFromPriority={setFromPriority} toDo={p} />);
-
-    const buildWeeklyPriorities = priorities.map((p) => p.type === 'weekly' && <SingleToDo key={`priority-${p.priorityId}`} setFromPriority={setFromPriority} toDo={p} />);
+    const buildWeeklyPriorities = priorities.map((p) => p.type === 'weekly'
+    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} />);
 
     return (
       <div className='PriorityCard'>
@@ -36,7 +38,7 @@ class PriorityCard extends React.Component {
         <h5 className='text-left'>Weekly</h5>
         {buildWeeklyPriorities}
         <div className='d-flex justify-content-end'>
-          { teamView ? '' : <button className='btn btn-outline-dark pt-0 pb-0 m-1' onClick={launchToDoModal} >New</button>}
+          { teamView ? '' : <button className='btn btn-outline-dark pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>}
         </div>
       </div>
     );

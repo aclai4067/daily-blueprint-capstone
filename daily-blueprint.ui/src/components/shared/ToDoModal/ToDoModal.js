@@ -28,6 +28,7 @@ class ToDoModal extends React.Component {
     toggleToDoModal: PropTypes.func,
     updateToDos: PropTypes.func,
     userId: PropTypes.number,
+    editMode: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -43,15 +44,19 @@ class ToDoModal extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.fromPriority !== prevProps.fromPriority) {
       if (this.props.fromPriority === true) {
-        const tempPriority = { ...this.state.priority };
-        tempPriority.type = 'daily';
-        this.setState({ priority: tempPriority });
+        if (this.props.editMode === true) {
+          const { toEdit } = this.props;
+        } else {
+          const tempPriority = { ...this.state.priority };
+          tempPriority.type = 'daily';
+          this.setState({ priority: tempPriority });
+        }
       }
     }
   }
 
   clearForm = () => {
-    const { userId } = this.props;
+    const { userId, setEditMode } = this.props;
     const currentDate = Moment().format();
     const clearToDo = {
       description: '',
@@ -67,6 +72,7 @@ class ToDoModal extends React.Component {
       priorityDate: '',
     };
     this.setState({ toDo: clearToDo, priority: clearPriority });
+    setEditMode(false, {});
   }
 
   resetOnSubmit = (userId) => {

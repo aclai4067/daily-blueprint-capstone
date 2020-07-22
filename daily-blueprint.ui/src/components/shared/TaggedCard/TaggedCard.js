@@ -19,7 +19,7 @@ class TaggedCard extends React.Component {
 
     return (
       <div className='TaggedCard'>
-        <h3>To Do</h3>
+        <h3>Tagged</h3>
         {buildTags}
       </div>
     );
