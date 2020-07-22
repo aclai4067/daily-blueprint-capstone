@@ -36,7 +36,7 @@ class Team extends React.Component {
 
   render() {
     const { teamToDisplay, teamPriorities } = this.state;
-    const currentDate = Moment().format('LLLL');
+    const currentDate = Moment().format('dddd, LL');
 
     const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard key={`member-${p.userId}`} teamPriorities={p} />);
 

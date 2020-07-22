@@ -20,6 +20,8 @@ class ToDoModal extends React.Component {
       type: '',
       priorityDate: '',
     },
+    priorityId: 0,
+    tdId: 0,
   }
 
   static propTypes = {
@@ -28,6 +30,8 @@ class ToDoModal extends React.Component {
     toggleToDoModal: PropTypes.func,
     updateToDos: PropTypes.func,
     userId: PropTypes.number,
+    editMode: PropTypes.bool,
+    tempPriority: PropTypes.func,
   }
 
   componentDidMount() {
@@ -41,17 +45,47 @@ class ToDoModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.fromPriority !== prevProps.fromPriority) {
+    if (this.props.fromPriority !== prevProps.fromPriority || this.props.editMode !== prevProps.editMode) {
       if (this.props.fromPriority === true) {
-        const tempPriority = { ...this.state.priority };
-        tempPriority.type = 'daily';
-        this.setState({ priority: tempPriority });
+        if (this.props.editMode === true) {
+          const { toEdit } = this.props;
+          this.setPriorityEdit(toEdit);
+          this.setToDoEdit(toEdit);
+          this.setState({ priorityId: toEdit.priorityId });
+        } else {
+          const tempPriority = { ...this.state.priority };
+          tempPriority.type = 'daily';
+          this.setState({ priority: tempPriority });
+        }
+      } else if (this.props.fromPriority === false && this.props.editMode === true) {
+        const { toEdit } = this.props;
+        this.setToDoEdit(toEdit);
+        this.setState({ tdId: toEdit.id });
       }
     }
   }
 
+  setToDoEdit = (toEdit) => {
+    const tempToDo = { ...this.state.toDo };
+    tempToDo.description = toEdit.description;
+    tempToDo.dateCreated = toEdit.dateCreated;
+    tempToDo.dateDue = toEdit.dateDue;
+    tempToDo.ownerUserId = toEdit.ownerUserId;
+    tempToDo.isComplete = toEdit.isComplete;
+    tempToDo.link = toEdit.link;
+    this.setState({ toDo: tempToDo });
+  }
+
+  setPriorityEdit = (toEdit) => {
+    const tempPriority = { ...this.state.priority };
+    tempPriority.toDoId = toEdit.toDoId;
+    tempPriority.type = toEdit.type;
+    tempPriority.priorityDate = toEdit.priorityDate;
+    this.setState({ priority: tempPriority });
+  }
+
   clearForm = () => {
-    const { userId } = this.props;
+    const { userId, setEditMode, setFromPriority } = this.props;
     const currentDate = Moment().format();
     const clearToDo = {
       description: '',
@@ -67,6 +101,8 @@ class ToDoModal extends React.Component {
       priorityDate: '',
     };
     this.setState({ toDo: clearToDo, priority: clearPriority });
+    setEditMode(false, {});
+    setFromPriority(false);
   }
 
   resetOnSubmit = (userId) => {
@@ -100,6 +136,44 @@ class ToDoModal extends React.Component {
           this.resetOnSubmit(userId);
         }
       }).catch((errorFromCreateToDo) => console.error(errorFromCreateToDo));
+  }
+
+  updateToDoEvent = (e) => {
+    e.preventDefault();
+    const { fromPriority, userId } = this.props;
+    const {
+      toDo,
+      priority,
+      priorityId,
+      tdId,
+    } = this.state;
+    const currentDate = Moment().format();
+    if (fromPriority) {
+      const priorityDetails = { ...toDo };
+      priorityDetails.toDoId = priority.toDoId;
+      priorityDetails.priorityDate = priority.priorityDate;
+      priorityDetails.type = priority.type;
+      priorityDetails.priorityId = priorityId;
+      toDoData.updatePriority(priorityDetails)
+        .then(() => this.resetOnSubmit(userId))
+        .catch((errorFromUpdatePriority) => console.error(errorFromUpdatePriority));
+    } else {
+      const tempToDo = { ... toDo };
+      tempToDo.id = tdId;
+      toDoData.updateToDo(tempToDo)
+        .then(() => {
+          if (priority.type === 'daily' || priority.type === 'weekly') {
+            const tempPriority = { ...priority };
+            tempPriority.toDoId = tdId;
+            tempPriority.priorityDate = currentDate;
+            this.setState({ priority: tempPriority });
+            toDoData.createPriority(this.state.priority)
+              .then(() => this.resetOnSubmit(userId));
+          } else {
+            this.resetOnSubmit(userId);
+          }
+        }).catch((errorFromUpdateToDo) => console.error(errorFromUpdateToDo));
+    }
   }
 
   descriptionChange = (e) => {
@@ -141,6 +215,7 @@ class ToDoModal extends React.Component {
     const {
       toDoModalIsOpen,
       toggleToDoModal,
+      editMode,
     } = this.props;
 
     return (
@@ -173,7 +248,7 @@ class ToDoModal extends React.Component {
                 <label htmlFor='isCompleteInput'className='ml-1'>Completed</label>
               </div>
               <div className='d-flex justify-content-between'>
-                <Button className='addToDoBtn' onClick={this.createToDoEvent}>Save</Button>{' '}
+                { editMode ? <Button className='UpdateToDoBtn' onClick={this.updateToDoEvent}>Update</Button> : <Button className='addToDoBtn' onClick={this.createToDoEvent}>Save</Button> }
                 <Button className='dismissModal' onClick={this.resetOnDismiss}>Cancel</Button>
               </div>
             </form>

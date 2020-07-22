@@ -74,6 +74,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                     var checkForPriority = priorities.FirstOrDefault((p) => p.ToDoId == t.Id);
                     if (checkForPriority == null)
                     {
+                        var tagged = GetTaggedUsersByToDoId(t.Id);
+                        t.TaggedUsers = tagged;
                         toDos.Add(t);
                     }
                 }
@@ -141,6 +143,48 @@ namespace daily_blueprint_capstone.DataAccessLayer
                     user.memberPriorities = priorities;
                 }
                 return getTeam;
+            }
+        }
+
+        public ToDos UpdateToDo(ToDos toDoToUpdate)
+        {
+            var query = @"Update ToDos
+                            set description = @description
+                            , dateDue = @dateDue
+                            , link = @link
+                            , isComplete = @isComplete
+                        output inserted.*
+                        where id = @Id";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<ToDos>(query, toDoToUpdate);
+            }
+        }
+
+        public Priorities ChangePriorityType(int priorityId, string newPriorityType)
+        {
+            var query = @"Update Priorities
+                            set type = @Type
+                        output inserted.*
+                        where id = @Id";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { Type = newPriorityType, Id = priorityId };
+                return db.QueryFirstOrDefault<Priorities>(query, parameters);
+            }
+        }
+
+        public int DeletePriority(int priorityId)
+        {
+            var query = @"Delete from Priorities
+                            where id = @Id";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { Id = priorityId };
+                return db.Execute(query, parameters);
             }
         }
     }
