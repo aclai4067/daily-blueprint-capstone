@@ -93,7 +93,7 @@ class Home extends React.Component {
             <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setEditMode={this.setEditMode} />
           </div>
         </div>
-        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toEdit={toEdit} setEditMode={this.setEditMode}
+        <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toEdit={toEdit} setEditMode={this.setEditMode} setFromPriority={this.setFromPriority}
         editMode={editMode} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
       </div>
     );

@@ -30,6 +30,10 @@ const createToDo = (toDoObj) => axios.post(`${baseUrl}/new`, toDoObj);
 
 const createPriority = (priorityObj) => axios.post(`${baseUrl}/new/priority`, priorityObj);
 
+const updateToDo = (toDoObj) => axios.put(`${baseUrl}/update`, toDoObj);
+
+const updatePriority = (priorityObj) => axios.put(`${baseUrl}/update/priority`, priorityObj);
+
 export default {
   getUserPriorities,
   getUserToDos,
@@ -37,4 +41,6 @@ export default {
   getTeamPriorities,
   createToDo,
   createPriority,
+  updateToDo,
+  updatePriority,
 };

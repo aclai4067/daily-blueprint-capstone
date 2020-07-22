@@ -24,14 +24,14 @@ class SingleToDo extends React.Component {
     return (
       <div className='SingleToDo d-flex justify-content-between'>
         { setFromPriority ? [
-          <form className='col-sm-8'>
+          <form key={`toDoEntry-${toDo.id}`} className='col-sm-8'>
             <input className='col-1 completeCheck' type='checkbox' id={`completePriority-${toDo.priorityId}`} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.priorityId}`}>
               {toDo.description}
               { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
               { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> }
             </label>
-          </form>] : [<form className='col-sm-9'>
+          </form>] : [<form key={`toDoEntry-${toDo.id}`} className='col-sm-9'>
             <input className='col-1 completeCheck' type='checkbox' id={`completeToDo-${toDo.id}`} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.id}`}>
             {toDo.description}
