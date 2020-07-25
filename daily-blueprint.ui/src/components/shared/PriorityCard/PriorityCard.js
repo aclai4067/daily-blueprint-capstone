@@ -9,6 +9,9 @@ class PriorityCard extends React.Component {
     priorities: PropTypes.arrayOf(PriorityShape.priorityShape),
     toggleToDoModal: PropTypes.func,
     teamView: PropTypes.bool,
+    updateToDos: PropTypes.func,
+    setFromPriority: PropTypes.func,
+    userId: PropTypes.number,
   }
 
   launchToDoModal = () => {
@@ -22,21 +25,28 @@ class PriorityCard extends React.Component {
       priorities,
       teamView,
       setEditMode,
+      updateToDos,
+      userId,
     } = this.props;
 
-    const buildDailyPriorities = priorities.map((p) => p.type === 'daily'
-    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} teamView={teamView} />);
+    const dailyCheck = priorities.find((p) => p.type === 'daily');
+    const weeklyCheck = priorities.find((p) => p.type === 'weekly');
 
-    const buildWeeklyPriorities = priorities.map((p) => p.type === 'weekly'
-    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} teamView={teamView} />);
+    const buildDailyPriorities = dailyCheck ? priorities.map((p) => p.type === 'daily'
+      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
+      teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Daily Priorities To Display</p>;
+
+    const buildWeeklyPriorities = weeklyCheck ? priorities.map((p) => p.type === 'weekly'
+      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
+      teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Weekly Priorities To Display</p>;
 
     return (
       <div className='PriorityCard'>
         <h3>Priorities</h3>
         <h5 className='text-left'>Daily</h5>
-        {buildDailyPriorities}
+        { buildDailyPriorities }
         <h5 className='text-left'>Weekly</h5>
-        {buildWeeklyPriorities}
+        { buildWeeklyPriorities }
         <div className='d-flex justify-content-end'>
           { teamView ? '' : <button className='btn btn-outline-dark pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>}
         </div>

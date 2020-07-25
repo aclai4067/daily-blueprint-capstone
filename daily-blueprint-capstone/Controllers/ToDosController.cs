@@ -117,5 +117,13 @@ namespace daily_blueprint_capstone.Controllers
             var updatedToDo = _repository.UpdateToDo(ToDoToUpdate);
             return Ok(updatedToDo);
         }
+
+        [HttpPut("complete/{toDoId}")]
+        public IActionResult CompleteToDo(int toDoId)
+        {
+            var completedToDo = _repository.MarkToDoComplete(toDoId);
+            if (completedToDo == null) return NotFound("this item could not be updated");
+            return Ok(completedToDo);
+        }
     }
 }

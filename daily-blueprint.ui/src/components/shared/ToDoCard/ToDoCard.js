@@ -9,6 +9,8 @@ class ToDoCard extends React.Component {
   static propTypes = {
     toDos: PropTypes.arrayOf(ToDoShape.toDoShape),
     toggleToDoModal: PropTypes.func,
+    updateToDos: PropTypes.func,
+    userId: PropTypes.number,
   }
 
   launchToDoModal = () => {
@@ -21,9 +23,12 @@ class ToDoCard extends React.Component {
     const {
       toDos,
       setEditMode,
+      updateToDos,
+      userId,
     } = this.props;
 
-    const buildToDos = toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} setEditMode={setEditMode} />);
+    const buildToDos = toDos.length !== 0 ? toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} setEditMode={setEditMode} updateToDos={updateToDos} userId={userId} />) 
+      : <p>There Are No To-Dos To Display</p>;
 
     return (
       <div className='ToDoCard'>

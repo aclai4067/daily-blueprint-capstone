@@ -32,10 +32,16 @@ class Home extends React.Component {
   getUserToDoAndPriorities = (userId) => {
     toDoData.getUserPriorities(userId)
       .then((results) => this.setState({ priorities: results.data }))
-      .catch((ErrorFromHomeGetPriorities) => console.error(ErrorFromHomeGetPriorities));
+      .catch((ErrorFromHomeGetPriorities) => {
+        this.setState({ priorities: [] });
+        console.error(ErrorFromHomeGetPriorities);
+      });
     toDoData.getUserToDos(userId)
       .then((toDoResults) => this.setState({ toDos: toDoResults.data }))
-      .catch((ErrorFromHomeGetTodos) => console.error(ErrorFromHomeGetTodos));
+      .catch((ErrorFromHomeGetTodos) => {
+        this.setState({ toDos: [] });
+        console.error(ErrorFromHomeGetTodos);
+      });
   }
 
   getUserTaggedToDos = (userId) => {
@@ -83,14 +89,16 @@ class Home extends React.Component {
           </div>
           <div className='col-sm-6 m-1'>
             <div className='dashboardCards col-12'>
-              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setEditMode={this.setEditMode} />
+              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority}
+                fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
               <TaggedCard tags={tags}></TaggedCard>
             </div>
           </div>
           <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setEditMode={this.setEditMode} />
+            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority}
+              setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
           </div>
         </div>
         <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toEdit={toEdit} setEditMode={this.setEditMode} setFromPriority={this.setFromPriority}

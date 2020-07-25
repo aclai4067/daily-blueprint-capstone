@@ -187,5 +187,19 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.Execute(query, parameters);
             }
         }
+
+        public ToDos MarkToDoComplete(int toDoId)
+        {
+            var query = @"Update ToDos
+                            set isComplete = 1
+                        output inserted.*
+                        where id = @ToDoId";
+
+            using( var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { ToDoId = toDoId };
+                return db.QueryFirstOrDefault<ToDos>(query, parameters);
+            }
+        }
     }
 }
