@@ -158,7 +158,7 @@ class ToDoModal extends React.Component {
         .then(() => this.resetOnSubmit(userId))
         .catch((errorFromUpdatePriority) => console.error(errorFromUpdatePriority));
     } else {
-      const tempToDo = { ... toDo };
+      const tempToDo = { ...toDo };
       tempToDo.id = tdId;
       toDoData.updateToDo(tempToDo)
         .then(() => {
