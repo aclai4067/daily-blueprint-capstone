@@ -34,6 +34,8 @@ const updateToDo = (toDoObj) => axios.put(`${baseUrl}/update`, toDoObj);
 
 const updatePriority = (priorityObj) => axios.put(`${baseUrl}/update/priority`, priorityObj);
 
+const completeToDo = (toDoId) => axios.put(`${baseUrl}/complete/${toDoId}`);
+
 export default {
   getUserPriorities,
   getUserToDos,
@@ -43,4 +45,5 @@ export default {
   createPriority,
   updateToDo,
   updatePriority,
+  completeToDo,
 };
