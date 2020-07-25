@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import './PriorityCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -9,6 +8,7 @@ class PriorityCard extends React.Component {
   static propTypes = {
     priorities: PropTypes.arrayOf(PriorityShape.priorityShape),
     toggleToDoModal: PropTypes.func,
+    teamView: PropTypes.bool,
   }
 
   launchToDoModal = () => {
@@ -25,10 +25,10 @@ class PriorityCard extends React.Component {
     } = this.props;
 
     const buildDailyPriorities = priorities.map((p) => p.type === 'daily'
-    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} />);
+    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} teamView={teamView} />);
 
     const buildWeeklyPriorities = priorities.map((p) => p.type === 'weekly'
-    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} />);
+    && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} toDo={p} setEditMode={setEditMode} teamView={teamView} />);
 
     return (
       <div className='PriorityCard'>
