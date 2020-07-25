@@ -9,19 +9,20 @@ import {
   faDotCircle,
   faCheckCircle,
 } from '@fortawesome/free-regular-svg-icons';
+import chime from './Computer_Magic.mp3';
 
 class Pomodoro extends React.Component {
   state = {
     timerActive: false,
-    remainingTime: 120,
-    displayTime: '2 : 00',
+    remainingTime: 1500,
+    displayTime: '25 : 00',
     session: 'work',
     workSessionCount: 0,
-    workMinutes: 2,
-    shortBreakMinutes: 1,
-    longBreakMinutes: 2,
-    sessionsUntilLongBreak: 2,
-    totalSessions: 4,
+    workMinutes: 25,
+    shortBreakMinutes: 5,
+    longBreakMinutes: 15,
+    sessionsUntilLongBreak: 4,
+    totalSessions: 8,
     timerInterval: 0,
   }
 
@@ -50,19 +51,20 @@ class Pomodoro extends React.Component {
       seconds = seconds < 10 ? `0${seconds}` : seconds;
       this.setState({ displayTime: `${minutes} : ${seconds}` });
       if (time === 0) {
+        this.playEndOfSessionAlert();
         if (session === 'work') { this.setState({ workSessionCount: this.state.workSessionCount + 1 }); }
         const { workSessionCount } = this.state;
         if (session === 'work' && workSessionCount % sessionsUntilLongBreak === 0) {
           this.setState({ session: 'long', remainingTime: longBreakMinutes * 60, displayTime: `${longBreakMinutes} : 00` });
-          alert('Take a long break!');
+          // alert('Take a long break!');
         } else if (session === 'work' && workSessionCount % sessionsUntilLongBreak !== 0) {
           this.setState({ session: 'short', remainingTime: shortBreakMinutes * 60, displayTime: `${shortBreakMinutes} : 00` });
-          alert('Take a short break!');
+          // alert('Take a short break!');
         } else if (workSessionCount === totalSessions) {
           this.stopTimer();
         } else if (session !== 'work' && workSessionCount < totalSessions) {
           this.setState({ session: 'work', remainingTime: workMinutes * 60, displayTime: `${workMinutes} : 00` });
-          alert('Time to Work!');
+          // alert('Time to Work!');
         }
         this.buildSessionTracker();
       }
@@ -87,6 +89,11 @@ class Pomodoro extends React.Component {
       session: 'work',
     });
   };
+
+  playEndOfSessionAlert = () => {
+    const sessionChime = document.getElementById('sessionAlertChime');
+    sessionChime.play();
+  }
 
   buildSessionTracker = () => {
     const {
@@ -149,7 +156,8 @@ class Pomodoro extends React.Component {
         <div className='timer col-8'>
           <div className='countdown'>
             <div className='timerBtns d-flex'>
-              { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button> : <button className='btn close timerControlBtn' onClick={this.runTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPlayCircle} /></button> }
+              { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button>
+                : <button className='btn close timerControlBtn' onClick={this.runTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPlayCircle} /></button> }
               <button className='btn close timerControlBtn' onClick={this.stopTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faStopCircle} /></button>
             </div>
             <h3>Work Time Remaining</h3>
@@ -158,6 +166,9 @@ class Pomodoro extends React.Component {
           <div className='sessionTrackerContainer'>
             {this.buildSessionTracker()}
           </div>
+          <audio id='sessionAlertChime'>
+            <source src={chime}></source>
+          </audio>
         </div>
       </div>
     );
