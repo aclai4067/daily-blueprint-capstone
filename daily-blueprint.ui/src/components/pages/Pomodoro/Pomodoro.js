@@ -1,5 +1,14 @@
 import './Pomodoro.scss';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlayCircle,
+  faPauseCircle,
+  faStopCircle,
+  faDotCircle,
+  faCheckCircle,
+} from '@fortawesome/free-regular-svg-icons';
 
 class Pomodoro extends React.Component {
   state = {
@@ -17,10 +26,11 @@ class Pomodoro extends React.Component {
   }
 
   runTimer = (e) => {
+    e.preventDefault();
     this.setState({ timerActive: true });
+    this.buildSessionTracker();
     const countdown = setInterval(() => {
       this.setState({ timerInterval: countdown });
-      e.preventDefault();
       const {
         session,
         totalSessions,
@@ -54,6 +64,7 @@ class Pomodoro extends React.Component {
           this.setState({ session: 'work', remainingTime: workMinutes * 60, displayTime: `${workMinutes} : 00` });
           alert('Time to Work!');
         }
+        this.buildSessionTracker();
       }
     }, 1000);
   };
@@ -76,6 +87,28 @@ class Pomodoro extends React.Component {
       session: 'work',
     });
   };
+
+  buildSessionTracker = () => {
+    const {
+      workSessionCount,
+      timerActive,
+      totalSessions,
+      session,
+    } = this.state;
+    let remaining = totalSessions - workSessionCount;
+    const sessionIndicators = [];
+    for (let i = 0; i < workSessionCount; i += 1) {
+      sessionIndicators.push({ id: `session${i}`, icon: faCheckCircle });
+    }
+    if (timerActive && session === 'work') {
+      remaining -= 1;
+      sessionIndicators.push({ id: `session${workSessionCount}`, icon: faDotCircle });
+    }
+    for (let n = 0; n < remaining; n += 1) {
+      sessionIndicators.push({ id: `session${n + 1 + workSessionCount}`, icon: faCircle });
+    }
+    return sessionIndicators.map((si) => <FontAwesomeIcon key={si.id} className='m-2 sessionIndicatorIcon' icon={si.icon} />);
+  }
 
   render() {
     const {
@@ -116,11 +149,14 @@ class Pomodoro extends React.Component {
         <div className='timer col-8'>
           <div className='countdown'>
             <div className='timerBtns d-flex'>
-              { timerActive ? <button onClick={this.pauseTimer}>Pause</button> : <button onClick={this.runTimer}>Start</button> }
-              <button onClick={this.stopTimer}>Stop</button>
+              { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button> : <button className='btn close timerControlBtn' onClick={this.runTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPlayCircle} /></button> }
+              <button className='btn close timerControlBtn' onClick={this.stopTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faStopCircle} /></button>
             </div>
             <h3>Work Time Remaining</h3>
             <p>{displayTime}</p>
+          </div>
+          <div className='sessionTrackerContainer'>
+            {this.buildSessionTracker()}
           </div>
         </div>
       </div>
