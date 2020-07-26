@@ -31,5 +31,33 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.Query<Teams>(query, parameters);
             }
         }
+
+        public Teams RemovePrimaryTeam(TeamMembersBasic teamObj)
+        {
+            var query = @"update TeamMembers
+                            set isPrimary = 0
+                        output inserted.*
+                        where userId = @userId
+                        and isPrimary = 1";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<Teams>(query, teamObj);
+            }
+        }
+
+        public Teams AddPrimaryTeam(TeamMembersBasic teamObj)
+        {
+            var query = @"update TeamMembers
+                            set isPrimary = 1
+                        output inserted.*
+                        where userId = @UserId
+                        and teamId = @TeamId";
+
+            using(var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<Teams>(query, teamObj);
+            }
+        }
     }
 }

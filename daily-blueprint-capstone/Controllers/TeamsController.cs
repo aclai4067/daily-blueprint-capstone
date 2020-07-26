@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using daily_blueprint_capstone.DataAccessLayer;
+using daily_blueprint_capstone.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,16 @@ namespace daily_blueprint_capstone.Controllers
                 return NotFound("You have not been assigned to any teams.  Please contact your team lead.");
             }
             return Ok(userTeams);
+        }
+
+        [HttpPut("primary")]
+        public IActionResult UpdatePrimaryTeam(TeamMembersBasic teamObj)
+        {
+            var oldPrimary = _repository.RemovePrimaryTeam(teamObj);
+            if (oldPrimary == null) return NotFound("Primary team update could not be completed");
+            var newPrimary = _repository.AddPrimaryTeam(teamObj);
+            if (newPrimary == null) return NotFound("This team could not be found");
+            return Ok(newPrimary);
         }
     }
 }

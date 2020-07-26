@@ -8,4 +8,6 @@ const getTeamsByUserId = (userId) => new Promise((resolve, reject) => {
     .catch((errorFromGetTeamsByUserId) => reject(errorFromGetTeamsByUserId));
 });
 
-export default { getTeamsByUserId };
+const updatePrimaryTeam = (teamObj) => axios.put(`${baseUrl}/primary`, teamObj);
+
+export default { getTeamsByUserId, updatePrimaryTeam };
