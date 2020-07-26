@@ -34,17 +34,36 @@ class Team extends React.Component {
       .catch((errorFromGetPrioritiesForCurrentTeam) => console.error(errorFromGetPrioritiesForCurrentTeam));
   };
 
+  updateTeamDisplay = (e) => {
+    e.preventDefault();
+    const teamsArr = this.state.teams;
+    const selectedTeamId = Number(e.target.value);
+    const selectedTeam = teamsArr.find((t) => t.teamId === selectedTeamId);
+    this.setState({ teamToDisplay: selectedTeam });
+    this.getPrioritiesForCurrentTeam(selectedTeamId);
+  }
+
   render() {
-    const { teamToDisplay, teamPriorities } = this.state;
+    const { teams, teamToDisplay, teamPriorities } = this.state;
     const currentDate = Moment().format('dddd, LL');
 
     const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard key={`member-${p.userId}`} teamPriorities={p} />);
+    const buildTeamOptions = teams.map((t) => <option key={`team-${t.teamId}`} value={t.teamId}>{t.teamName}</option>);
 
     return (
       <div className='Team'>
-        <div className='d-flex justify-content-between flex-wrap'>
-          <h2 className='todaysDate text-left col-sm-7'>{currentDate}</h2>
-          <h2>{teamToDisplay.teamName}</h2>
+        <div className='d-flex justify-content-around flex-wrap mt-1'>
+          <h2 className='todaysDate text-left'>{currentDate}</h2>
+          <div>
+            <h2 className='teamName'>{teamToDisplay.teamName}</h2>
+            { !teamToDisplay.isPrimary && <button>Make Primary</button> }
+          </div>
+          { teams.length > 1 && <form>
+            <select className='form-control mt-1' id='selectedTeam' value='' onChange={this.updateTeamDisplay}>
+              <option value='' disabled>Change Team</option>
+              {buildTeamOptions}
+            </select>
+          </form> }
         </div>
         {buildMemberPriorityCards}
       </div>
