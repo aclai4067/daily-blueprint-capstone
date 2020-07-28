@@ -41,5 +41,17 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.Query<Users>(query, UserToAdd);
             }
         }
+
+        public IEnumerable<Users> GetUsersByOrgId(int orgId)
+        {
+            var query = @"select * from Users
+                        where organizationId = @OrgId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { OrgId = orgId };
+                return db.Query<Users>(query, parameters);
+            }
+        }
     }
 }

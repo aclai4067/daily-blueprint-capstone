@@ -41,5 +41,21 @@ namespace daily_blueprint_capstone.Controllers
             if (newPrimary == null) return NotFound("This team could not be found");
             return Ok(newPrimary);
         }
+
+        [HttpPost("TeamMember")]
+        public IActionResult CreateTeamMember(TeamMembers teamMemberObj)
+        {
+            var newTeammate = _repository.AddTeamMember(teamMemberObj);
+            if (newTeammate == null) return NotFound("This team member could not be added.");
+            return Ok(newTeammate);
+        }
+
+        [HttpDelete("TeamMember/delete")]
+        public IActionResult DeleteTeamMember(TeamMembersBasic teamMemberToRemove)
+        {
+            var removeTeamMember = _repository.RemoveTeamMember(teamMemberToRemove);
+            if (removeTeamMember == 0) NotFound("This team member could not be removed.");
+            return Ok("This team member has been removed");
+        }
     }
 }

@@ -10,4 +10,13 @@ const getTeamsByUserId = (userId) => new Promise((resolve, reject) => {
 
 const updatePrimaryTeam = (teamObj) => axios.put(`${baseUrl}/primary`, teamObj);
 
-export default { getTeamsByUserId, updatePrimaryTeam };
+const addTeamMember = (teamMemberObj) => axios.post(`${baseUrl}/TeamMember`, teamMemberObj);
+
+const removeTeamMember = (teamMemberObj) => axios.delete(`${baseUrl}/TeamMember/delete`, teamMemberObj);
+
+export default {
+  getTeamsByUserId,
+  updatePrimaryTeam,
+  addTeamMember,
+  removeTeamMember,
+};
