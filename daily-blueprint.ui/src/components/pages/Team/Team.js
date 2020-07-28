@@ -83,7 +83,7 @@ class Team extends React.Component {
           <div>
             <h2 className='teamName'>{teamToDisplay.teamName}</h2>
             { !teamToDisplay.isPrimary && <button className='btn btn-outline-light' onClick={this.changePrimaryTeam}>Make Primary</button> }
-            { !teamToDisplay.isTeamLead && <button className='btn btn-outline-light' onClick={this.toggleTeamModal}>Edit Team</button> }
+            { teamToDisplay.isTeamLead && <button className='btn btn-outline-light' onClick={this.toggleTeamModal}>Edit Team</button> }
 
           </div>
           { teams.length > 1 && <form>
@@ -94,7 +94,8 @@ class Team extends React.Component {
           </form> }
         </div>
         {buildMemberPriorityCards}
-        <TeamMemberModal team={teamToDisplay} teamPriorities={teamPriorities} teamModalIsOpen={teamModalIsOpen} toggleTeamModal={this.toggleTeamModal} orgId={user.organizationId} />
+        <TeamMemberModal team={teamToDisplay} teamPriorities={teamPriorities} teamModalIsOpen={teamModalIsOpen} toggleTeamModal={this.toggleTeamModal}
+          orgId={user.organizationId} getAllTeamData={this.getAllTeamData} userId={user.id} />
       </div>
     );
   }

@@ -12,7 +12,7 @@ const updatePrimaryTeam = (teamObj) => axios.put(`${baseUrl}/primary`, teamObj);
 
 const addTeamMember = (teamMemberObj) => axios.post(`${baseUrl}/TeamMember`, teamMemberObj);
 
-const removeTeamMember = (teamMemberObj) => axios.delete(`${baseUrl}/TeamMember/delete`, teamMemberObj);
+const removeTeamMember = (teamMemberObj) => axios.delete(`${baseUrl}/TeamMember/delete`, { data: teamMemberObj });
 
 export default {
   getTeamsByUserId,
