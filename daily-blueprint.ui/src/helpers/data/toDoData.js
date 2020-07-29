@@ -36,6 +36,10 @@ const updatePriority = (priorityObj) => axios.put(`${baseUrl}/update/priority`, 
 
 const completeToDo = (toDoId) => axios.put(`${baseUrl}/complete/${toDoId}`);
 
+const createTag = (tagObj) => axios.post(`${baseUrl}/tag/add`, tagObj);
+
+const removeTag = (tagId) => axios.delete(`${baseUrl}/tag/delete/${tagId}`);
+
 export default {
   getUserPriorities,
   getUserToDos,
@@ -46,4 +50,6 @@ export default {
   updateToDo,
   updatePriority,
   completeToDo,
+  createTag,
+  removeTag,
 };
