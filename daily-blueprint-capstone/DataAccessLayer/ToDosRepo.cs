@@ -17,9 +17,9 @@ namespace daily_blueprint_capstone.DataAccessLayer
             ConnectionString = config.GetConnectionString("DailyBlueprint");
         }
 
-        public List<Users> GetTaggedUsersByToDoId(int toDoId)
+        public List<TaggedUsers> GetTaggedUsersByToDoId(int toDoId)
         {
-            var query = @"select users.*
+            var query = @"select users.*, Tags.Id as TagId
                         from Users
 	                        join Tags
 	                        on Tags.UserId = Users.Id
@@ -28,7 +28,7 @@ namespace daily_blueprint_capstone.DataAccessLayer
             using(var db = new SqlConnection(ConnectionString))
             {
                 var parameters = new { ToDoId = toDoId };
-                var taggedUsers = db.Query<Users>(query, parameters);
+                var taggedUsers = db.Query<TaggedUsers>(query, parameters);
                 return taggedUsers.ToList();
             }
         }
@@ -215,6 +215,18 @@ namespace daily_blueprint_capstone.DataAccessLayer
             using ( var db = new SqlConnection(ConnectionString))
             {
                 return db.QueryFirstOrDefault<Tags>(query, tagToAdd);
+            }
+        }
+
+        public int DeleteTag(int tagId)
+        {
+            var query = @"delete from Tags
+                        where Id = @TagId";
+            
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { TagId = tagId };
+                return db.Execute(query, parameters);
             }
         }
     }

@@ -22,32 +22,39 @@ class TagModal extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.tagModalIsOpen && (this.props.tagModalIsOpen !== prevProps.tagModalIsOpen || this.props.toTag !== prevProps.toTag)) {
+    if (this.props.tagModalIsOpen && this.props.tagModalIsOpen !== prevProps.tagModalIsOpen) {
       const { owner, toTag, fromPriority } = this.props;
       if (fromPriority) {
         this.setState({ toDoId: toTag.toDoId });
       } else {
         this.setState({ toDoId: toTag.id });
       }
+      const currentTagged = toTag.taggedUsers;
+      this.setState({ tagged: currentTagged });
       this.getAllUsers(owner.organizationId);
     }
   }
 
   getAllUsers = (orgId) => {
-    const { toTag } = this.props;
     userData.getAllUsersByOrg(orgId)
       .then((results) => {
         const allUsers = results.data;
-        const currentTagged = toTag.taggedUsers;
+        const currentTagged = this.state.tagged;
         const unassigned = [];
         allUsers.forEach((u) => {
-          const taggedUser = currentTagged.find((t) => t.userId === u.id);
+          const taggedUser = currentTagged.find((t) => t.id === u.id);
           if (taggedUser === undefined) {
             unassigned.push(u);
           }
         });
-        this.setState({ tagged: currentTagged, unassignedUsers: unassigned });
+        this.setState({ unassignedUsers: unassigned });
       }).catch((errorFromGetAllUsers) => console.error(errorFromGetAllUsers));
+  }
+
+  updateTagged = (toDoId) => {
+    toDoData.getTagsByToDo(toDoId)
+      .then((results) => this.setState({ tagged: results.data }))
+      .catch(() => this.setState({ tagged: [] }));
   }
 
   addTag = (e) => {
@@ -62,17 +69,22 @@ class TagModal extends React.Component {
       .then(() => {
         updateToDos(owner.id);
         this.setState({ userToAdd: '' });
+        this.updateTagged(toDoId);
+        this.getAllUsers(owner.organizationId);
       }).catch((errorFromAddTag) => console.error(errorFromAddTag));
   }
 
   deleteTag = (e) => {
     e.preventDefault();
+    const { toDoId } = this.state;
     const { updateToDos, owner } = this.props;
     const tagToRemove = Number(e.target.value);
     toDoData.removeTag(tagToRemove)
       .then(() => {
         updateToDos(owner.id);
         this.setState({ userToAdd: '' });
+        this.updateTagged(toDoId);
+        this.getAllUsers(owner.organizationId);
       }).catch((errorFromDeleteTag) => console.error(errorFromDeleteTag));
   }
 
@@ -89,8 +101,8 @@ class TagModal extends React.Component {
     this.setState({ userToAdd: userId });
   }
 
-  buildTaggedList = () => this.state.tagged.map((t) => <div key={`tagged-${t.id}`} className='col-sm-4 d-flex'><p>{`${t.firstName} ${t.lastName}`}</p>
-      <button className='btn close' value={t.id} onClick={this.deleteTag}>X</button></div>);
+  buildTaggedList = () => this.state.tagged.map((t) => <div key={`tagged-${t.tagId}`} className='col-sm-4 d-flex'><p>{`${t.firstName} ${t.lastName}`}</p>
+      <button className='btn close' value={t.tagId} onClick={this.deleteTag}>X</button></div>);
 
   buildStaffDropdown = () => this.state.unassignedUsers.map((u) => <option key={`tagStaff-${u.id}`} value={u.id}>{`${u.firstName} ${u.lastName}`}</option>);
 
@@ -107,6 +119,7 @@ class TagModal extends React.Component {
           <ModalBody>
             <div>
               <form className='unassignedUsers d-flex flex-wrap'>
+                <h5>Tag Others</h5>
                 <select className='form-control' id='tagUserInput' value={userToAdd} onChange={this.userToAddChange}>
                   <option value='' disabled defaultValue>Select A Coworker To Tag</option>
                   {this.buildStaffDropdown()}
@@ -116,6 +129,7 @@ class TagModal extends React.Component {
                 </div>
               </form>
               <div className='taggedUsers d-flex flex-wrap'>
+                <h5>Tagged</h5>
                 {this.buildTaggedList()}
               </div>
               <Button className='dismissModal' onClick={this.dismissTagModal}>Done</Button>

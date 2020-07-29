@@ -17,6 +17,6 @@ namespace daily_blueprint_capstone.Models
         public int OwnerUserId { get; set; }
         public bool isComplete { get; set; }
         public string Link { get; set; }
-        public List<Users> TaggedUsers { get; set; }
+        public List<TaggedUsers> TaggedUsers { get; set; }
     }
 }
