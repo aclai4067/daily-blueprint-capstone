@@ -58,7 +58,7 @@ class TagModal extends React.Component {
       userId: Number(userToAdd),
       toDoId,
     };
-    toDoData.addTag(newTag)
+    toDoData.createTag(newTag)
       .then(() => {
         updateToDos(owner.id);
         this.setState({ userToAdd: '' });

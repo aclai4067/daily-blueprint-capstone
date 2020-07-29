@@ -20,11 +20,18 @@ class PriorityCard extends React.Component {
     toggleToDoModal();
   };
 
+  launchTagModal = () => {
+    const { toggleTagModal, setFromPriority } = this.props;
+    setFromPriority(true);
+    toggleTagModal();
+  };
+
   render() {
     const {
       priorities,
       teamView,
       setEditMode,
+      setToTag,
       updateToDos,
       userId,
     } = this.props;
@@ -33,12 +40,12 @@ class PriorityCard extends React.Component {
     const weeklyCheck = priorities.find((p) => p.type === 'weekly');
 
     const buildDailyPriorities = dailyCheck ? priorities.map((p) => p.type === 'daily'
-      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
-      teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Daily Priorities To Display</p>;
+      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
+      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Daily Priorities To Display</p>;
 
     const buildWeeklyPriorities = weeklyCheck ? priorities.map((p) => p.type === 'weekly'
-      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
-      teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Weekly Priorities To Display</p>;
+      && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
+      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Weekly Priorities To Display</p>;
 
     return (
       <div className='PriorityCard'>

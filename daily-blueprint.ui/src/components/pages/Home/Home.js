@@ -100,7 +100,7 @@ class Home extends React.Component {
             </div>
             <img className='profilePhoto' src={user.imageUrl} alt={user.name} />
           </div>
-          <div className='col-sm-6 m-1'>
+          <div className='col-lg-6'>
             <div className='dashboardCards col-12'>
               <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag}
                 toggleTagModal={this.toggleTagModal} fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
@@ -109,9 +109,11 @@ class Home extends React.Component {
               <TaggedCard tags={tags}></TaggedCard>
             </div>
           </div>
-          <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag} toggleTagModal={this.toggleTagModal}
-              setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+          <div className='col-lg-6'>
+            <div className='dashboardCards col-12'>
+              <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag} toggleTagModal={this.toggleTagModal}
+                setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+              </div>
           </div>
         </div>
         <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toEdit={toEdit} setEditMode={this.setEditMode} setFromPriority={this.setFromPriority}
