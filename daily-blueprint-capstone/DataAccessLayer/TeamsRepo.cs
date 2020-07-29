@@ -23,7 +23,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                         from TeamMembers TM
 	                        join Teams T
 	                        on TM.teamId = T.id
-                        where TM.userId = @UserId";
+                        where TM.userId = @UserId
+                        order by TeamName";
 
             using(var db = new SqlConnection(ConnectionString))
             {
@@ -90,14 +91,17 @@ namespace daily_blueprint_capstone.DataAccessLayer
 
         public int RemoveTeamMember(TeamMembersBasic memberToDelete)
         {
-            var query = @"delete from TeamMembers
+            var deleteQuery = @"delete from TeamMembers
                         where userId = @UserId
                         and teamId = @TeamId";
 
             using (var db = new SqlConnection(ConnectionString))
             {
-                return db.Execute(query, memberToDelete);
+                var removed = db.Execute(deleteQuery, memberToDelete);
+                return removed;
             }
         }
+
+
     }
 }

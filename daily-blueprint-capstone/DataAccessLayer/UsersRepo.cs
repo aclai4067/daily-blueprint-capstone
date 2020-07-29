@@ -45,7 +45,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
         public IEnumerable<Users> GetUsersByOrgId(int orgId)
         {
             var query = @"select * from Users
-                        where organizationId = @OrgId";
+                        where organizationId = @OrgId
+                        order by FirstName";
 
             using (var db = new SqlConnection(ConnectionString))
             {

@@ -40,7 +40,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                             join toDos t
                             on p.toDoId = t.id
                         where t.ownerUserId = @UserId
-                        and t.isComplete = 0";
+                        and t.isComplete = 0
+                        order by PriorityDate";
 
             using(var db = new SqlConnection(ConnectionString))
             {
@@ -60,7 +61,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
             var query = @"select *
                         from toDos 
                         where ownerUserId = @UserId
-                        and isComplete = 0";
+                        and isComplete = 0
+                        order by DateDue";
 
             var priorities = GetPrioritiesByUser(userId).ToList();
 
@@ -92,7 +94,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                             join users u
                             on td.ownerUserId = u.id
                         where tg.userId = @userId
-                        and td.isComplete = 0";
+                        and td.isComplete = 0
+                        order by DateDue";
 
             using (var db = new SqlConnection(ConnectionString))
             {
@@ -131,7 +134,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                         from TeamMembers TM
 	                        join Users U
 	                        on TM.UserId = U.Id
-                        where TM.TeamId = @TeamId";
+                        where TM.TeamId = @TeamId
+                        order by FirstName";
 
             using (var db = new SqlConnection(ConnectionString))
             {
