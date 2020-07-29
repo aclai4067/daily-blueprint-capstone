@@ -125,5 +125,13 @@ namespace daily_blueprint_capstone.Controllers
             if (completedToDo == null) return NotFound("this item could not be updated");
             return Ok(completedToDo);
         }
+
+        [HttpPost("tag/add")]
+        public IActionResult AddTag(Tags tagToAdd)
+        {
+            var newTag = _repository.AddTag(tagToAdd);
+            if (newTag == null) return NotFound("Tag could not be added");
+            return Ok(newTag);
+        }
     }
 }

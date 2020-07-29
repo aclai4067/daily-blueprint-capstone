@@ -205,5 +205,17 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.QueryFirstOrDefault<ToDos>(query, parameters);
             }
         }
+
+        public Tags AddTag(Tags tagToAdd)
+        {
+            var query = @"insert into Tags(ToDoId, UserId)
+                        output inserted.*
+                        values(@ToDoId, @UserId)";
+
+            using ( var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<Tags>(query, tagToAdd);
+            }
+        }
     }
 }
