@@ -5,12 +5,14 @@ import teamsData from '../../../helpers/data/teamsData';
 import UserShape from '../../../helpers/propz/UserShape';
 import toDoData from '../../../helpers/data/toDoData';
 import TeamPriorityCard from '../../shared/TeamPriorityCard/TeamPriorityCard';
+import TeamMemberModal from '../../shared/TeamMemberModal/TeamMemberModal';
 
 class Team extends React.Component {
   state = {
     teams: [],
     teamToDisplay: {},
     teamPriorities: [],
+    teamModalIsOpen: false,
   }
 
   static propTypes = {
@@ -38,6 +40,10 @@ class Team extends React.Component {
       .catch((errorFromGetPrioritiesForCurrentTeam) => console.error(errorFromGetPrioritiesForCurrentTeam));
   };
 
+  toggleTeamModal = () => {
+    this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+  }
+
   updateTeamDisplay = (e) => {
     e.preventDefault();
     const teamsArr = this.state.teams;
@@ -58,7 +64,13 @@ class Team extends React.Component {
   }
 
   render() {
-    const { teams, teamToDisplay, teamPriorities } = this.state;
+    const {
+      teams,
+      teamToDisplay,
+      teamPriorities,
+      teamModalIsOpen,
+    } = this.state;
+    const { user } = this.props;
     const currentDate = Moment().format('dddd, LL');
 
     const buildMemberPriorityCards = teamPriorities.map((p) => <TeamPriorityCard key={`member-${p.userId}`} teamPriorities={p} />);
@@ -71,6 +83,8 @@ class Team extends React.Component {
           <div>
             <h2 className='teamName'>{teamToDisplay.teamName}</h2>
             { !teamToDisplay.isPrimary && <button className='btn btn-outline-light' onClick={this.changePrimaryTeam}>Make Primary</button> }
+            { teamToDisplay.isTeamLead && <button className='btn btn-outline-light' onClick={this.toggleTeamModal}>Edit Team</button> }
+
           </div>
           { teams.length > 1 && <form>
             <select className='form-control mt-1' id='selectedTeam' value='' onChange={this.updateTeamDisplay}>
@@ -80,6 +94,8 @@ class Team extends React.Component {
           </form> }
         </div>
         {buildMemberPriorityCards}
+        <TeamMemberModal team={teamToDisplay} teamPriorities={teamPriorities} teamModalIsOpen={teamModalIsOpen} toggleTeamModal={this.toggleTeamModal}
+          orgId={user.organizationId} getAllTeamData={this.getAllTeamData} userId={user.id} />
       </div>
     );
   }

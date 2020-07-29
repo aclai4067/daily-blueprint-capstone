@@ -8,6 +8,12 @@ const getUserByFirebaseUid = (uid) => new Promise((resolve, reject) => {
     .catch((errFromUserData) => reject(errFromUserData));
 });
 
+const getAllUsersByOrg = (orgId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/organization/${orgId}`)
+    .then((user) => resolve(user))
+    .catch((errFromUsersByOrg) => reject(errFromUsersByOrg));
+});
+
 const createUser = (userObj) => axios.post(`${baseUrl}/newUser`, userObj);
 
-export default { getUserByFirebaseUid, createUser };
+export default { getUserByFirebaseUid, getAllUsersByOrg, createUser };

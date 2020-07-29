@@ -23,7 +23,8 @@ namespace daily_blueprint_capstone.DataAccessLayer
                         from TeamMembers TM
 	                        join Teams T
 	                        on TM.teamId = T.id
-                        where TM.userId = @UserId";
+                        where TM.userId = @UserId
+                        order by TeamName";
 
             using(var db = new SqlConnection(ConnectionString))
             {
@@ -59,5 +60,48 @@ namespace daily_blueprint_capstone.DataAccessLayer
                 return db.QueryFirstOrDefault<Teams>(query, teamObj);
             }
         }
+
+        public TeamMembers FindPrimaryTeam(int userId)
+        {
+            var query = @"select * from TeamMembers
+                        where userId = @userId
+                        and isPrimary = 1";
+            
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var parameters = new { UserId = userId };
+                return db.QueryFirstOrDefault<TeamMembers>(query, parameters);
+            }
+        }
+
+        public TeamMembers AddTeamMember(TeamMembers newTeamMember)
+        {
+            var hasPrimary = FindPrimaryTeam(newTeamMember.UserId);
+            if (hasPrimary == null) newTeamMember.isPrimary = true;
+
+            var query = @"insert into TeamMembers(userId, teamId, isTeamLead, isPrimary)
+                        output inserted.*
+                        values(@userId, @teamId, @isTeamLead, @isPrimary)";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                return db.QueryFirstOrDefault<TeamMembers>(query, newTeamMember);
+            }
+        }
+
+        public int RemoveTeamMember(TeamMembersBasic memberToDelete)
+        {
+            var deleteQuery = @"delete from TeamMembers
+                        where userId = @UserId
+                        and teamId = @TeamId";
+
+            using (var db = new SqlConnection(ConnectionString))
+            {
+                var removed = db.Execute(deleteQuery, memberToDelete);
+                return removed;
+            }
+        }
+
+
     }
 }

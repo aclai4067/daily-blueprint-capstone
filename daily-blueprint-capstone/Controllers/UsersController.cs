@@ -38,5 +38,14 @@ namespace daily_blueprint_capstone.Controllers
             var newUser = _repository.SaveNewUser(UserToAdd);
             return Ok(newUser);
         }
+
+        [HttpGet("organization/{orgId}")]
+        public IActionResult GetAllUsersByOrg(int orgId)
+        {
+            var orgUsers = _repository.GetUsersByOrgId(orgId);
+            var isEmpty = !orgUsers.Any();
+            if (isEmpty) return NotFound("No users have signed up for this organization");
+            return Ok(orgUsers);
+        }
     }
 }
