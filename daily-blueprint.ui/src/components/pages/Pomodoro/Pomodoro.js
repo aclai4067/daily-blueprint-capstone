@@ -27,6 +27,7 @@ class Pomodoro extends React.Component {
     timerInterval: 0,
     isCustom: false,
     editTimer: false,
+    timerId: 0,
   }
 
   componentDidMount() {
@@ -44,6 +45,7 @@ class Pomodoro extends React.Component {
           longBreakMinutes: settings.longBreakMinutes,
           sessionsUntilLongBreak: settings.sessionsUntilLongBreak,
           totalSessions: settings.totalSessions,
+          timerId: settings.id,
         });
       }).catch(() => this.setState({ isCustom: false }));
   }
@@ -141,32 +143,60 @@ class Pomodoro extends React.Component {
 
   sessionsUntilLongBreakchange = (e) => {
     e.preventDefault();
-    this.setState({ sessionsUntilLongBreak: e.target.value });
+    this.setState({ sessionsUntilLongBreak: Number(e.target.value) });
   }
 
   totalSessionsChange = (e) => {
     e.preventDefault();
-    this.setState({ totalSessions: e.target.value });
+    this.setState({ totalSessions: Number(e.target.value) });
   }
 
   workMinutesChange = (e) => {
     e.preventDefault();
-    this.setState({ workMinutes: e.target.value });
+    this.setState({ workMinutes: Number(e.target.value) });
   }
 
   shortBreakMinutesChange = (e) => {
     e.preventDefault();
-    this.setState({ shortBreakMinutes: e.target.value });
+    this.setState({ shortBreakMinutes: Number(e.target.value) });
   }
 
   longBreakMinutesChange = (e) => {
     e.preventDefault();
-    this.setState({ longBreakMinutes: e.target.value });
+    this.setState({ longBreakMinutes: Number(e.target.value) });
   }
 
   setEditTimer = (e) => {
     e.preventDefault();
     this.setState({ editTimer: true });
+  }
+
+  saveTimerSettingsEvent = (e) => {
+    e.preventDefault();
+    const { isCustom, timerId } = this.state;
+    const { user } = this.props;
+    const timerObj = {
+      userId: user.id,
+      totalSessions: this.state.totalSessions,
+      sessionsUntilLongBreak: this.state.sessionsUntilLongBreak,
+      workMinutes: this.state.workMinutes,
+      shortBreakMinutes: this.state.shortBreakMinutes,
+      longBreakMinutes: this.state.longBreakMinutes,
+    };
+    if (isCustom) {
+      timerObj.id = timerId;
+      pomodoroData.updatePomodoro(timerObj)
+        .then(() => {
+          this.setState({ editTimer: false });
+          this.stopTimer();
+        }).catch((errorFromUpdateTimer) => console.error(errorFromUpdateTimer));
+    } else {
+      pomodoroData.createPomodoro(timerObj)
+        .then((results) => {
+          this.setState({ isCustom: true, editTimer: false, timerId: results.data.id });
+          this.stopTimer();
+        }).catch((errorFromCreateTimer) => console.error(errorFromCreateTimer));
+    }
   }
 
   render() {
@@ -206,7 +236,7 @@ class Pomodoro extends React.Component {
             { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p>{`${longBreakMinutes} min`}</p> }
           </div>
           <div>
-            { editTimer ? <button>Save</button> : <button onClick={this.setEditTimer}>Settings</button> }
+            { editTimer ? <button onClick={this.saveTimerSettingsEvent}>Save</button> : <button onClick={this.setEditTimer}>Settings</button> }
           </div>
         </div>
         <div className='timer col-8'>
