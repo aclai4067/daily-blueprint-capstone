@@ -50,7 +50,17 @@ class Home extends React.Component {
   getUserTaggedToDos = (userId) => {
     toDoData.getUserTags(userId)
       .then((tagResults) => this.setState({ tags: tagResults.data }))
-      .catch((ErrorFromHomeGetTags) => console.error(ErrorFromHomeGetTags));
+      .catch((ErrorFromHomeGetTags) => {
+        this.setState({ tags: [] });
+        console.error(ErrorFromHomeGetTags);
+      });
+  }
+
+  removeTag = (tagToRemove) => {
+    const { user } = this.props;
+    toDoData.removeTag(tagToRemove)
+      .then(() => this.getUserTaggedToDos(user.id))
+      .catch((errorFromRemoveTag) => console.error(errorFromRemoveTag));
   }
 
   toggleToDoModal = () => {
@@ -106,7 +116,7 @@ class Home extends React.Component {
                 toggleTagModal={this.toggleTagModal} fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
-              <TaggedCard tags={tags}></TaggedCard>
+              <TaggedCard tags={tags} removeTag={this.removeTag}></TaggedCard>
             </div>
           </div>
           <div className='col-lg-6'>
