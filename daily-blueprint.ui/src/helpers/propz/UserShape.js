@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 const userShape = PropTypes.shape({
   id: PropTypes.number,
+  tagId: PropTypes.number,
   firstName: PropTypes.string.isRequired,
   lastName: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,

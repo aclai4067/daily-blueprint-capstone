@@ -7,6 +7,7 @@ import PriorityCard from '../../shared/PriorityCard/PriorityCard';
 import ToDoCard from '../../shared/ToDoCard/ToDoCard';
 import TaggedCard from '../../shared/TaggedCard/TaggedCard';
 import ToDoModal from '../../shared/ToDoModal/ToDoModal';
+import TagModal from '../../shared/TagModal/TagModal';
 
 class Home extends React.Component {
   state = {
@@ -14,9 +15,11 @@ class Home extends React.Component {
     toDos: [],
     tags: [],
     toDoModalIsOpen: false,
+    tagModalIsOpen: false,
     fromPriority: false,
     editMode: false,
     toEdit: {},
+    toTag: {},
   }
 
   static propTypes = {
@@ -47,11 +50,25 @@ class Home extends React.Component {
   getUserTaggedToDos = (userId) => {
     toDoData.getUserTags(userId)
       .then((tagResults) => this.setState({ tags: tagResults.data }))
-      .catch((ErrorFromHomeGetTags) => console.error(ErrorFromHomeGetTags));
+      .catch((ErrorFromHomeGetTags) => {
+        this.setState({ tags: [] });
+        console.error(ErrorFromHomeGetTags);
+      });
+  }
+
+  removeTag = (tagToRemove) => {
+    const { user } = this.props;
+    toDoData.removeTag(tagToRemove)
+      .then(() => this.getUserTaggedToDos(user.id))
+      .catch((errorFromRemoveTag) => console.error(errorFromRemoveTag));
   }
 
   toggleToDoModal = () => {
     this.setState({ toDoModalIsOpen: !this.state.toDoModalIsOpen });
+  }
+
+  toggleTagModal = () => {
+    this.setState({ tagModalIsOpen: !this.state.tagModalIsOpen });
   }
 
   setFromPriority = (status) => {
@@ -63,15 +80,21 @@ class Home extends React.Component {
     this.setState({ toEdit });
   }
 
+  setToTag = (toTag) => {
+    this.setState({ toTag });
+  }
+
   render() {
     const {
       priorities,
       toDos,
       tags,
       toDoModalIsOpen,
+      tagModalIsOpen,
       fromPriority,
       editMode,
       toEdit,
+      toTag,
     } = this.state;
     const { user } = this.props;
     const today = new Date();
@@ -87,22 +110,26 @@ class Home extends React.Component {
             </div>
             <img className='profilePhoto' src={user.imageUrl} alt={user.name} />
           </div>
-          <div className='col-sm-6 m-1'>
+          <div className='col-lg-6'>
             <div className='dashboardCards col-12'>
-              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority}
-                fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+              <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag}
+                toggleTagModal={this.toggleTagModal} fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
             </div>
             <div className='dashboardCards col-12 mt-3'>
-              <TaggedCard tags={tags}></TaggedCard>
+              <TaggedCard tags={tags} removeTag={this.removeTag}></TaggedCard>
             </div>
           </div>
-          <div className='dashboardCards col-sm-5 m-1'>
-            <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority}
-              setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+          <div className='col-lg-6'>
+            <div className='dashboardCards col-12'>
+              <ToDoCard toDos={toDos} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag} toggleTagModal={this.toggleTagModal}
+                setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+              </div>
           </div>
         </div>
         <ToDoModal toDoModalIsOpen={toDoModalIsOpen} fromPriority={fromPriority} toEdit={toEdit} setEditMode={this.setEditMode} setFromPriority={this.setFromPriority}
-        editMode={editMode} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} ></ToDoModal>
+          editMode={editMode} toggleToDoModal={this.toggleToDoModal} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
+        <TagModal tagModalIsOpen={tagModalIsOpen} toggleTagModal={this.toggleTagModal} toTag={toTag} setToTag={this.setToTag} updateToDos={this.getUserToDoAndPriorities}
+          owner={user} fromPriority={fromPriority} />
       </div>
     );
   }

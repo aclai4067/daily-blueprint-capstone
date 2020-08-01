@@ -125,5 +125,30 @@ namespace daily_blueprint_capstone.Controllers
             if (completedToDo == null) return NotFound("this item could not be updated");
             return Ok(completedToDo);
         }
+
+        [HttpPost("tag/add")]
+        public IActionResult AddTag(Tags tagToAdd)
+        {
+            var newTag = _repository.AddTag(tagToAdd);
+            if (newTag == null) return NotFound("Tag could not be added");
+            return Ok(newTag);
+        }
+
+        [HttpDelete("tag/delete/{tagId}")]
+        public IActionResult RemoveTag(int tagId)
+        {
+            var oldTag = _repository.DeleteTag(tagId);
+            if (oldTag == 0) return NotFound("Tag could not be removed");
+            return Ok("Tag was successfully remove");
+        }
+
+        [HttpGet("tag/{toDoId}")]
+        public IActionResult getTagsByToDo(int toDoId)
+        {
+            var tags = _repository.GetTaggedUsersByToDoId(toDoId);
+            var isEmpty = !tags.Any();
+            if (isEmpty) return NotFound("No users are tagged for this to do");
+            return Ok(tags);
+        }
     }
 }

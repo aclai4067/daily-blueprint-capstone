@@ -3,7 +3,7 @@ import './SingleToDo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTag, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faUserTag, faEdit, faTags } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'moment';
 import toDoData from '../../../helpers/data/toDoData';
 
@@ -20,6 +20,12 @@ class SingleToDo extends React.Component {
     const { toDo, setEditMode, launchToDoModal } = this.props;
     launchToDoModal();
     setEditMode(true, toDo);
+  }
+
+  launchTagUserModal = () => {
+    const { toDo, setToTag, launchTagModal } = this.props;
+    launchTagModal();
+    setToTag(toDo);
   }
 
   completeToDo = () => {
@@ -54,7 +60,7 @@ class SingleToDo extends React.Component {
               { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
               { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> }
             </label>
-          </form>] : [<form key={`toDoEntry-${toDo.id}`} className='col-sm-9'>
+          </form>] : [<form key={`toDoEntry-${toDo.id}`} className='col-sm-8'>
             <input className='col-1 completeCheck' type='checkbox' id={`completeToDo-${toDo.id}`} onChange={this.completeToDo} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.id}`}>
             {toDo.description}
@@ -63,8 +69,9 @@ class SingleToDo extends React.Component {
             </label>
           </form>]
         }
-      <p className='text-right col-sm-3'>{dueDate}</p>
-      { teamView ? '' : <button className='editButton btn close col-1' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon' icon={faEdit} /></button> }
+      <p className='text-right col-sm-2'>{dueDate}</p>
+      { teamView ? '' : <div className='d-flex flex-wrap col-2'><button className='editButton btn close col-6' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon' icon={faEdit} /></button>
+      <button className='tagButton btn close col-6' onClick={this.launchTagUserModal}><FontAwesomeIcon className='tagIcon' icon={faTags} /></button></div> }
       </div>
     );
   }

@@ -26,6 +26,12 @@ const getTeamPriorities = (teamId) => new Promise((resolve, reject) => {
     .catch((errorFromGetTeamPriorities) => reject(errorFromGetTeamPriorities));
 });
 
+const getTagsByToDo = (toDoId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/tag/${toDoId}`)
+    .then((users) => resolve(users))
+    .catch((errorFromGetTagsByToDo) => reject(errorFromGetTagsByToDo));
+});
+
 const createToDo = (toDoObj) => axios.post(`${baseUrl}/new`, toDoObj);
 
 const createPriority = (priorityObj) => axios.post(`${baseUrl}/new/priority`, priorityObj);
@@ -36,14 +42,21 @@ const updatePriority = (priorityObj) => axios.put(`${baseUrl}/update/priority`, 
 
 const completeToDo = (toDoId) => axios.put(`${baseUrl}/complete/${toDoId}`);
 
+const createTag = (tagObj) => axios.post(`${baseUrl}/tag/add`, tagObj);
+
+const removeTag = (tagId) => axios.delete(`${baseUrl}/tag/delete/${tagId}`);
+
 export default {
   getUserPriorities,
   getUserToDos,
   getUserTags,
   getTeamPriorities,
+  getTagsByToDo,
   createToDo,
   createPriority,
   updateToDo,
   updatePriority,
   completeToDo,
+  createTag,
+  removeTag,
 };

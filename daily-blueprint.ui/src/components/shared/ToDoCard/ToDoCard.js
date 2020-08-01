@@ -19,15 +19,23 @@ class ToDoCard extends React.Component {
     toggleToDoModal();
   };
 
+  launchTagModal = () => {
+    const { toggleTagModal, setFromPriority } = this.props;
+    setFromPriority(false);
+    toggleTagModal();
+  };
+
   render() {
     const {
       toDos,
       setEditMode,
+      setToTag,
       updateToDos,
       userId,
     } = this.props;
 
-    const buildToDos = toDos.length !== 0 ? toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} setEditMode={setEditMode} updateToDos={updateToDos} userId={userId} />) 
+    const buildToDos = toDos.length !== 0 ? toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal}
+      setEditMode={setEditMode} setToTag={setToTag} updateToDos={updateToDos} userId={userId} />)
       : <p>There Are No To-Dos To Display</p>;
 
     return (
