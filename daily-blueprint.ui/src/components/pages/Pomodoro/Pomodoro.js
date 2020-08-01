@@ -10,6 +10,7 @@ import {
   faCheckCircle,
 } from '@fortawesome/free-regular-svg-icons';
 import chime from './Computer_Magic.mp3';
+import pomodoroData from '../../../helpers/data/pomodoroData';
 
 class Pomodoro extends React.Component {
   state = {
@@ -29,6 +30,21 @@ class Pomodoro extends React.Component {
 
   componentDidMount() {
     const { user } = this.props;
+    pomodoroData.findPomodoroByUserId(user.id)
+      .then((results) => {
+        const settings = results.data;
+        const workSeconds = settings.workMinutes * 60;
+        this.setState({
+          isCustom: true,
+          remainingTime: workSeconds,
+          displayTime: `${settings.workMinutes} : 00`,
+          workMinutes: settings.workMinutes,
+          shortBreakMinutes: settings.shortBreakMinutes,
+          longBreakMinutes: settings.longBreakMinutes,
+          sessionsUntilLongBreak: settings.sessionsUntilLongBreak,
+          totalSessions: settings.totalSessions,
+        });
+      }).catch(() => this.setState({ isCustom: false }));
   }
 
   runTimer = (e) => {
