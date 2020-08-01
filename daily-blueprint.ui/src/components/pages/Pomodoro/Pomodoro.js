@@ -24,6 +24,11 @@ class Pomodoro extends React.Component {
     sessionsUntilLongBreak: 4,
     totalSessions: 8,
     timerInterval: 0,
+    isCustom: false,
+  }
+
+  componentDidMount() {
+    const { user } = this.props;
   }
 
   runTimer = (e) => {
