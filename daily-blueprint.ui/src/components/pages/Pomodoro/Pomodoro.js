@@ -26,6 +26,7 @@ class Pomodoro extends React.Component {
     totalSessions: 8,
     timerInterval: 0,
     isCustom: false,
+    editTimer: false,
   }
 
   componentDidMount() {
@@ -138,6 +139,36 @@ class Pomodoro extends React.Component {
     return sessionIndicators.map((si) => <FontAwesomeIcon key={si.id} className='m-2 sessionIndicatorIcon' icon={si.icon} />);
   }
 
+  sessionsUntilLongBreakchange = (e) => {
+    e.preventDefault();
+    this.setState({ sessionsUntilLongBreak: e.target.value });
+  }
+
+  totalSessionsChange = (e) => {
+    e.preventDefault();
+    this.setState({ totalSessions: e.target.value });
+  }
+
+  workMinutesChange = (e) => {
+    e.preventDefault();
+    this.setState({ workMinutes: e.target.value });
+  }
+
+  shortBreakMinutesChange = (e) => {
+    e.preventDefault();
+    this.setState({ shortBreakMinutes: e.target.value });
+  }
+
+  longBreakMinutesChange = (e) => {
+    e.preventDefault();
+    this.setState({ longBreakMinutes: e.target.value });
+  }
+
+  setEditTimer = (e) => {
+    e.preventDefault();
+    this.setState({ editTimer: true });
+  }
+
   render() {
     const {
       timerActive,
@@ -147,6 +178,7 @@ class Pomodoro extends React.Component {
       longBreakMinutes,
       sessionsUntilLongBreak,
       totalSessions,
+      editTimer,
     } = this.state;
 
     return (
@@ -155,23 +187,26 @@ class Pomodoro extends React.Component {
         <div className='timerDetails col-4'>
           <div>
             <h4>Work Sessions Before Long Break</h4>
-            <p>{sessionsUntilLongBreak}</p>
+            { editTimer ? <input type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} /> : <p>{sessionsUntilLongBreak}</p> }
           </div>
           <div>
             <h4>Work Sessions Per Cycle</h4>
-            <p>{totalSessions}</p>
+            { editTimer ? <input type='number' min={1} value={totalSessions} onChange={this.totalSessionsChange} /> : <p>{totalSessions}</p> }
           </div>
           <div>
             <h4>Work</h4>
-            <p>{`${workMinutes} min`}</p>
+            { editTimer ? <input type='number' min={1} value={workMinutes} onChange={this.workMinutesChange} /> : <p>{`${workMinutes} min`}</p> }
           </div>
           <div>
             <h4>Short Break</h4>
-            <p>{`${shortBreakMinutes} min`}</p>
+            { editTimer ? <input type='number' min={1} value={shortBreakMinutes} onChange={this.shortBreakMinutesChange} /> : <p>{`${shortBreakMinutes} min`}</p> }
           </div>
           <div>
             <h4>Long Break</h4>
-            <p>{`${longBreakMinutes} min`}</p>
+            { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p>{`${longBreakMinutes} min`}</p> }
+          </div>
+          <div>
+            { editTimer ? <button>Save</button> : <button onClick={this.setEditTimer}>Settings</button> }
           </div>
         </div>
         <div className='timer col-8'>
