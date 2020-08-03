@@ -17,7 +17,7 @@ class Pomodoro extends React.Component {
   state = {
     timerActive: false,
     remainingTime: 1500,
-    elaspsedDasharray: 283,
+    elaspsedDasharray: 275,
     totalTime: 1500,
     displayTime: '25 : 00',
     session: 'work',
@@ -121,7 +121,7 @@ class Pomodoro extends React.Component {
   setTimerCircle = () => {
     const { totalTime, remainingTime } = this.state;
     const remainingFraction = remainingTime / totalTime;
-    const remainingDasharray = `${(remainingFraction * 283).toFixed(0)} 283`;
+    const remainingDasharray = `${(remainingFraction * 275).toFixed(0)} 275`;
     this.setState({ elaspsedDasharray: remainingDasharray });
   }
 
@@ -253,8 +253,7 @@ class Pomodoro extends React.Component {
 
     return (
       <div className='Pomodoro d-flex flex-wrap'>
-        <h1 className='col-12'>Pomodoro Timer</h1>
-        <div className='timerDetails col-md-4'>
+        <div className='timerDetails col-md-4 pt-sm-5'>
           <div>
             <h4>Work Sessions Before Long Break</h4>
             { editTimer ? <input type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} /> : <p>{sessionsUntilLongBreak}</p> }
@@ -276,10 +275,12 @@ class Pomodoro extends React.Component {
             { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p>{`${longBreakMinutes} min`}</p> }
           </div>
           <div>
-            { editTimer ? <button onClick={this.saveTimerSettingsEvent}>Save</button> : <button onClick={this.setEditTimer}>Settings</button> }
+            { editTimer ? <button className='btn btn-light mt-2' onClick={this.saveTimerSettingsEvent}>Save</button> : <button className='btn btn-light mt-2'
+              onClick={this.setEditTimer}>Settings</button> }
           </div>
         </div>
-        <div className='timer col-md-8'>
+        <div className='timer col-md-8 pt-sm-3'>
+          <h1 className='col-12'>Pomodoro Timer</h1>
           <div className='countdown'>
             <div className='timerBtns d-flex justify-content-center'>
               { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button>

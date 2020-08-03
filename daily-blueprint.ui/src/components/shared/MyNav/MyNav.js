@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import PropTypes from 'prop-types';
+import logo from './DBPlogo.png';
 
 class MyNav extends React.Component {
   state = {
@@ -62,7 +63,7 @@ class MyNav extends React.Component {
     return (
       <div className='MyNav'>
         <Navbar className='navbar navbar-expand-lg navbar-light bg-light'>
-          <NavbarBrand className='navBrand' href='/'>Daily Blueprint</NavbarBrand>
+          <NavbarBrand className='navBrand' href='/'><img src={logo} alt='Daily Blueprint Logo' /></NavbarBrand>
           { (authed) && (<NavbarToggler className='navTog' onClick={this.toggleNav} />) }
           <Collapse isOpen={isOpen} navbar>
               { buildNavLinks() }

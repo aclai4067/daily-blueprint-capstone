@@ -3,6 +3,12 @@
 .Pomodoro{
 
   color: $dbpNavy;
+
+  .timerDetails {
+    background-color: $translucentCream;
+    border-right: 2px solid $dbpNavy;
+    height: 100vh;
+  }
   
   .timerBtns{
 
@@ -51,7 +57,7 @@
 
         .timeRemaining{
           stroke-width: .5em;
-          stroke-linecap: round;
+          stroke-linecap: square;
           transform: rotate(90deg);
           transform-origin: center;
           transition: 1s linear all;
