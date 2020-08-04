@@ -1,10 +1,96 @@
+@import '../../../styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Martel:wght@900&family=Merriweather:wght@700&display=swap');
+
 .Pomodoro{
 
-  .timerControlBtn{
+  color: $dbpNavy;
 
-    svg{
-      height: 2em;
-      width: 2em;
+  .toast{
+    background-color: $translucentCream;
+    border: 1px solid rgb(150, 11, 76);
+    color: rgb(150, 11, 76);
+    font-weight: bold;
+  }
+
+  .timerDetails {
+    background-color: $translucentCream;
+    border-right: 2px solid cornsilk;
+    height: 94vh;
+
+    .setting{
+      color: $dbpLogoBlue;
+      font-size: 1.5em;
+    }
+
+    .settingInput{
+      max-width: 5em;
+    }
+  }
+  
+  .timerBtns{
+
+    .timerControlBtn{
+
+      margin: .5em;
+
+      svg{
+        height: 2em;
+        width: 2em;
+      }
+    }
+  }
+
+  .FAinfo{
+    background-color: $dbpLogoBlue;
+    border: 1px solid $dbpLogoBlue;
+    border-radius: 999px;
+    color: cornsilk;
+    height: .5em;
+    width: .5em;
+  }
+
+  .timerDisplay{
+
+    position: relative;
+    height: 19em;
+    width: 19em;
+    margin: 3em auto;
+
+    .timerCountdown{
+
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+      font-family: 'Merriweather', 'Martel', serif;
+    }
+
+    .timerBackground{
+
+      .timerCircle{
+
+        fill: none;
+        stroke: none;
+
+        .timeElapsed{
+
+          stroke-width: .6em;
+          stroke: $translucentCream;
+        }
+
+        .timeRemaining{
+          stroke-width: .5em;
+          stroke-linecap: square;
+          transform: rotate(90deg);
+          transform-origin: center;
+          transition: 1s linear all;
+          stroke: currentColor;
+        }
+      }
     }
   }
 }
