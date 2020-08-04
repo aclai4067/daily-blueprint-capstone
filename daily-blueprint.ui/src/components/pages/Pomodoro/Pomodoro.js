@@ -1,5 +1,6 @@
 import './Pomodoro.scss';
 import React from 'react';
+import { Toast, ToastBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -33,6 +34,9 @@ class Pomodoro extends React.Component {
     editTimer: false,
     timerId: 0,
     pomodoroModalIsOpen: false,
+    lbToastIsOpen: true,
+    sbToastIsOpen: true,
+    workToastIsOpen: true,
   }
 
   componentDidMount() {
@@ -105,9 +109,10 @@ class Pomodoro extends React.Component {
             remainingTime: shortBreakMinutes * 60,
             totalTime: shortBreakMinutes * 60,
             displayTime: `${shortBreakMinutes} : 00`,
-          });
+            sbToastIsOpen: true,
+          },
+          () => { window.setTimeout(() => { this.setState({ sbToastIsOpen: false }); }, 8000); });
           this.playEndOfWorkSessionAlert();
-          // alert('Take a short break!');
         } else if (workSessionCount === totalSessions) {
           this.stopTimer();
         } else if (session !== 'work' && workSessionCount < totalSessions) {
@@ -257,6 +262,9 @@ class Pomodoro extends React.Component {
       totalSessions,
       editTimer,
       pomodoroModalIsOpen,
+      lbToastIsOpen,
+      sbToastIsOpen,
+      workToastIsOpen,
     } = this.state;
 
     return (
@@ -264,23 +272,26 @@ class Pomodoro extends React.Component {
         <div className='timerDetails col-md-4 d-flex flex-column justify-content-around'>
           <div>
             <h4>Work Sessions Before Long Break</h4>
-            { editTimer ? <input type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} /> : <p className='setting'>{sessionsUntilLongBreak}</p> }
+            { editTimer ? <input className='settingInput' type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} />
+              : <p className='setting'>{sessionsUntilLongBreak}</p> }
           </div>
           <div>
             <h4>Work Sessions Per Cycle</h4>
-            { editTimer ? <input type='number' min={1} value={totalSessions} onChange={this.totalSessionsChange} /> : <p className='setting'>{totalSessions}</p> }
+            { editTimer ? <input className='settingInput' type='number' min={1} value={totalSessions} onChange={this.totalSessionsChange} /> : <p className='setting'>{totalSessions}</p> }
           </div>
           <div>
             <h4>Work Time</h4>
-            { editTimer ? <input type='number' min={1} value={workMinutes} onChange={this.workMinutesChange} /> : <p className='setting'>{`${workMinutes} min`}</p> }
+            { editTimer ? <input className='settingInput' type='number' min={1} value={workMinutes} onChange={this.workMinutesChange} /> : <p className='setting'>{`${workMinutes} min`}</p> }
           </div>
           <div>
             <h4>Short Break Time</h4>
-            { editTimer ? <input type='number' min={1} value={shortBreakMinutes} onChange={this.shortBreakMinutesChange} /> : <p className='setting'>{`${shortBreakMinutes} min`}</p> }
+            { editTimer ? <input className='settingInput' type='number' min={1} value={shortBreakMinutes} onChange={this.shortBreakMinutesChange} />
+              : <p className='setting'>{`${shortBreakMinutes} min`}</p> }
           </div>
           <div>
             <h4>Long Break Time</h4>
-            { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p className='setting'>{`${longBreakMinutes} min`}</p> }
+            { editTimer ? <input className='settingInput' type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} />
+              : <p className='setting'>{`${longBreakMinutes} min`}</p> }
           </div>
           <div>
             { editTimer ? <button className='btn btn-outline-secondary mt-2' onClick={this.saveTimerSettingsEvent}>Save</button> : <button className='btn btn-secondary settingsBtn mt-2'
@@ -288,7 +299,30 @@ class Pomodoro extends React.Component {
           </div>
         </div>
         <div className='timer col-md-8 pt-sm-3'>
-          <h1 className='col-12'>Pomodoro Timer <FontAwesomeIcon className='FAinfo' onClick={this.togglePomodoroModal} icon={faInfoCircle}/></h1>
+          <h1 className='col-12 mb-sm-1'>Pomodoro Timer <FontAwesomeIcon className='FAinfo' onClick={this.togglePomodoroModal} icon={faInfoCircle}/></h1>
+          <div className='d-flex justify-content-center'>
+            <div className="p-3 col-3 my-2 rounded">
+              <Toast isOpen={lbToastIsOpen}>
+                <ToastBody>
+                  Take a long break!
+                </ToastBody>
+              </Toast>
+            </div>
+            <div className="p-3 col-3 my-2 rounded">
+              <Toast isOpen={sbToastIsOpen}>
+                <ToastBody>
+                  Take a short break!
+                </ToastBody>
+              </Toast>
+            </div>
+            <div className="p-3 col-3 my-2 rounded">
+              <Toast isOpen={workToastIsOpen}>
+                <ToastBody>
+                  Time to Work!
+                </ToastBody>
+              </Toast>
+            </div>
+          </div>
           <div className='countdown'>
             <div className='timerBtns d-flex justify-content-center'>
               { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button>
