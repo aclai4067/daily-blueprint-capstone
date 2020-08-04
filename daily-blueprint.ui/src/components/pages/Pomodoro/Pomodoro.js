@@ -34,9 +34,9 @@ class Pomodoro extends React.Component {
     editTimer: false,
     timerId: 0,
     pomodoroModalIsOpen: false,
-    lbToastIsOpen: true,
-    sbToastIsOpen: true,
-    workToastIsOpen: true,
+    lbToastIsOpen: false,
+    sbToastIsOpen: false,
+    workToastIsOpen: false,
   }
 
   componentDidMount() {
@@ -100,9 +100,10 @@ class Pomodoro extends React.Component {
             remainingTime: longBreakMinutes * 60,
             totalTime: longBreakMinutes * 60,
             displayTime: `${longBreakMinutes} : 00`,
-          });
+            lbToastIsOpen: true,
+          },
+          () => { window.setTimeout(() => { this.setState({ lbToastIsOpen: false }); }, 8000); });
           this.playEndOfWorkSessionAlert();
-          // alert('Take a long break!');
         } else if (session === 'work' && workSessionCount % sessionsUntilLongBreak !== 0) {
           this.setState({
             session: 'short',
@@ -122,8 +123,9 @@ class Pomodoro extends React.Component {
             remainingTime: workMinutes * 60,
             totalTime: workMinutes * 60,
             displayTime: `${workMinutes} : 00`,
-          });
-          // alert('Time to Work!');
+            workToastIsOpen: true,
+          },
+          () => { window.setTimeout(() => { this.setState({ workToastIsOpen: false }); }, 8000); });
         }
         this.buildSessionTracker();
       }
