@@ -7,7 +7,12 @@
   .timerDetails {
     background-color: $translucentCream;
     border-right: 2px solid $dbpNavy;
-    height: 100vh;
+    height: 94vh;
+
+    .setting{
+      color: $dbpLogoBlue;
+      font-size: 1.5em;
+    }
   }
   
   .timerBtns{
@@ -21,6 +26,15 @@
         width: 2em;
       }
     }
+  }
+
+  .FAinfo{
+    background-color: $dbpLogoBlue;
+    border: 1px solid $dbpLogoBlue;
+    border-radius: 999px;
+    color: cornsilk;
+    height: .5em;
+    width: .5em;
   }
 
   .timerDisplay{

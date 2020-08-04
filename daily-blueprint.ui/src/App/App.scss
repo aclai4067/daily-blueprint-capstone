@@ -1,5 +1,12 @@
+@import '../styles/variables';
+
 .App {
   text-align: center;
+  background:(radial-gradient(transparent, $dbpBlue) no-repeat center center fixed,
+  $dbpBlue url("https://images.unsplash.com/photo-1528458909336-e7a0adfed0a5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=645&q=80") no-repeat center center fixed);
+  background-size: cover;
+  color: $dbpNavy;
+  min-height: 100vh;
 }
 
 .App-logo {

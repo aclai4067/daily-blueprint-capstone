@@ -1,7 +1,7 @@
 import './Pomodoro.scss';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import {
   faPlayCircle,
   faPauseCircle,
@@ -12,12 +12,13 @@ import {
 import chime from './Computer_Magic.mp3';
 import workChime from './watch_alarm.mp3';
 import pomodoroData from '../../../helpers/data/pomodoroData';
+import PomodoroModal from '../../shared/PomodoroModal/PomodoroModal';
 
 class Pomodoro extends React.Component {
   state = {
     timerActive: false,
     remainingTime: 1500,
-    elaspsedDasharray: 275,
+    elaspsedDasharray: 276,
     totalTime: 1500,
     displayTime: '25 : 00',
     session: 'work',
@@ -31,6 +32,7 @@ class Pomodoro extends React.Component {
     isCustom: false,
     editTimer: false,
     timerId: 0,
+    pomodoroModalIsOpen: false,
   }
 
   componentDidMount() {
@@ -52,6 +54,11 @@ class Pomodoro extends React.Component {
           timerId: settings.id,
         });
       }).catch(() => this.setState({ isCustom: false }));
+  }
+
+  togglePomodoroModal = (e) => {
+    e.preventDefault();
+    this.setState({ pomodoroModalIsOpen: !this.state.pomodoroModalIsOpen });
   }
 
   runTimer = (e) => {
@@ -121,7 +128,7 @@ class Pomodoro extends React.Component {
   setTimerCircle = () => {
     const { totalTime, remainingTime } = this.state;
     const remainingFraction = remainingTime / totalTime;
-    const remainingDasharray = `${(remainingFraction * 275).toFixed(0)} 275`;
+    const remainingDasharray = `${(remainingFraction * 276).toFixed(0)} 276`;
     this.setState({ elaspsedDasharray: remainingDasharray });
   }
 
@@ -249,38 +256,39 @@ class Pomodoro extends React.Component {
       sessionsUntilLongBreak,
       totalSessions,
       editTimer,
+      pomodoroModalIsOpen,
     } = this.state;
 
     return (
       <div className='Pomodoro d-flex flex-wrap'>
-        <div className='timerDetails col-md-4 pt-sm-5'>
+        <div className='timerDetails col-md-4 d-flex flex-column justify-content-around'>
           <div>
             <h4>Work Sessions Before Long Break</h4>
-            { editTimer ? <input type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} /> : <p>{sessionsUntilLongBreak}</p> }
+            { editTimer ? <input type='number' min={1} value={sessionsUntilLongBreak} onChange={this.sessionsUntilLongBreakchange} /> : <p className='setting'>{sessionsUntilLongBreak}</p> }
           </div>
           <div>
             <h4>Work Sessions Per Cycle</h4>
-            { editTimer ? <input type='number' min={1} value={totalSessions} onChange={this.totalSessionsChange} /> : <p>{totalSessions}</p> }
+            { editTimer ? <input type='number' min={1} value={totalSessions} onChange={this.totalSessionsChange} /> : <p className='setting'>{totalSessions}</p> }
           </div>
           <div>
-            <h4>Work</h4>
-            { editTimer ? <input type='number' min={1} value={workMinutes} onChange={this.workMinutesChange} /> : <p>{`${workMinutes} min`}</p> }
+            <h4>Work Time</h4>
+            { editTimer ? <input type='number' min={1} value={workMinutes} onChange={this.workMinutesChange} /> : <p className='setting'>{`${workMinutes} min`}</p> }
           </div>
           <div>
-            <h4>Short Break</h4>
-            { editTimer ? <input type='number' min={1} value={shortBreakMinutes} onChange={this.shortBreakMinutesChange} /> : <p>{`${shortBreakMinutes} min`}</p> }
+            <h4>Short Break Time</h4>
+            { editTimer ? <input type='number' min={1} value={shortBreakMinutes} onChange={this.shortBreakMinutesChange} /> : <p className='setting'>{`${shortBreakMinutes} min`}</p> }
           </div>
           <div>
-            <h4>Long Break</h4>
-            { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p>{`${longBreakMinutes} min`}</p> }
+            <h4>Long Break Time</h4>
+            { editTimer ? <input type='number' min={1} value={longBreakMinutes} onChange={this.longBreakMinutesChange} /> : <p className='setting'>{`${longBreakMinutes} min`}</p> }
           </div>
           <div>
-            { editTimer ? <button className='btn btn-light mt-2' onClick={this.saveTimerSettingsEvent}>Save</button> : <button className='btn btn-light mt-2'
+            { editTimer ? <button className='btn btn-outline-secondary mt-2' onClick={this.saveTimerSettingsEvent}>Save</button> : <button className='btn btn-secondary settingsBtn mt-2'
               onClick={this.setEditTimer}>Settings</button> }
           </div>
         </div>
         <div className='timer col-md-8 pt-sm-3'>
-          <h1 className='col-12'>Pomodoro Timer</h1>
+          <h1 className='col-12'>Pomodoro Timer <FontAwesomeIcon className='FAinfo' onClick={this.togglePomodoroModal} icon={faInfoCircle}/></h1>
           <div className='countdown'>
             <div className='timerBtns d-flex justify-content-center'>
               { timerActive ? <button className='btn close timerControlBtn' onClick={this.pauseTimer}><FontAwesomeIcon className='m-2 timerControlIcon' icon={faPauseCircle} /></button>
@@ -318,6 +326,7 @@ class Pomodoro extends React.Component {
             <source src={workChime}></source>
           </audio>
         </div>
+        <PomodoroModal pomodoroModalIsOpen={pomodoroModalIsOpen} togglePomodoroModal={this.togglePomodoroModal} />
       </div>
     );
   }
