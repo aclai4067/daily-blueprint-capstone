@@ -35,24 +35,21 @@ class Home extends React.Component {
   getUserToDoAndPriorities = (userId) => {
     toDoData.getUserPriorities(userId)
       .then((results) => this.setState({ priorities: results.data }))
-      .catch((ErrorFromHomeGetPriorities) => {
+      .catch(() => {
         this.setState({ priorities: [] });
-        console.error(ErrorFromHomeGetPriorities);
       });
     toDoData.getUserToDos(userId)
       .then((toDoResults) => this.setState({ toDos: toDoResults.data }))
-      .catch((ErrorFromHomeGetTodos) => {
+      .catch(() => {
         this.setState({ toDos: [] });
-        console.error(ErrorFromHomeGetTodos);
       });
   }
 
   getUserTaggedToDos = (userId) => {
     toDoData.getUserTags(userId)
       .then((tagResults) => this.setState({ tags: tagResults.data }))
-      .catch((ErrorFromHomeGetTags) => {
+      .catch(() => {
         this.setState({ tags: [] });
-        console.error(ErrorFromHomeGetTags);
       });
   }
 

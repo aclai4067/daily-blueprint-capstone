@@ -50,7 +50,7 @@ class SingleToDo extends React.Component {
     const { toDo, fromPriority, teamView } = this.props;
     const dueDate = Moment(toDo.dateDue).format('MM/DD/YY');
 
-    const buildTaggedUsers = () => toDo.taggedUsers.map((u) => <li>{`${u.firstName} ${u.lastName}`}</li>);
+    const buildTaggedUsers = () => toDo.taggedUsers.map((u) => <li key={`tagged-${u.id}`}>{`${u.firstName} ${u.lastName}`}</li>);
 
     return (
       <div className='SingleToDo d-flex justify-content-between'>

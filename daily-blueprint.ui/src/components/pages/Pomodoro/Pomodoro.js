@@ -334,12 +334,12 @@ class Pomodoro extends React.Component {
             { session === 'work' ? <h3>Work Time Remaining</h3> : <h3>Break Time Remaining</h3>}
             <div className='timerDisplay'>
               <svg className='timerBackground' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'>
-                <g class='timerCircle'>
+                <g className='timerCircle'>
                   <circle className='timeElapsed' cx='50' cy='50' r='45'></circle>
                   <path
                   id='remainingTimeDisplay'
                   strokeDasharray={elaspsedDasharray}
-                  class='timeRemaining'
+                  className='timeRemaining'
                   d='
                     M 50, 50
                     m -45, 0
