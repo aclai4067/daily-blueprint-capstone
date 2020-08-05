@@ -33,4 +33,14 @@
       }
     }
   }
+
+  .optionBtns{
+    display: none;
+  }
+
+  &:hover{
+    .optionBtns{
+      display: flex;
+    } 
+  }
 }

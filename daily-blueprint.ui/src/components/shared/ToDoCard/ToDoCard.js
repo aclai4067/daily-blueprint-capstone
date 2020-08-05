@@ -43,7 +43,7 @@ class ToDoCard extends React.Component {
         <h3>To Do</h3>
         {buildToDos}
         <div className='d-flex justify-content-end'>
-          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>
+          <button className='btn btn-outline-secondary newToDoBtn pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>
         </div>
       </div>
     );

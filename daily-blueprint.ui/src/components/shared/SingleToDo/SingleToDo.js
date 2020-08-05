@@ -53,7 +53,7 @@ class SingleToDo extends React.Component {
     const buildTaggedUsers = () => toDo.taggedUsers.map((u) => <li key={`tagged-${u.id}`}>{`${u.firstName} ${u.lastName}`}</li>);
 
     return (
-      <div className='SingleToDo d-flex justify-content-between'>
+      <div className='SingleToDo d-flex justify-content-between flex-wrap'>
         { fromPriority ? [
           <form key={`toDoEntry-${toDo.id}`} className='col-sm-8'>
             { teamView ? '' : <input className='col-1 completeCheck' type='checkbox' id={`completePriority-${toDo.priorityId}`} onChange={this.completeToDo} /> }
@@ -71,9 +71,9 @@ class SingleToDo extends React.Component {
             </label>
           </form>]
         }
-      <p className='text-right col-sm-2'>{dueDate}</p>
-      { teamView ? '' : <div className='d-flex flex-wrap col-2'><button className='editButton btn close col-6' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon' icon={faEdit} /></button>
+      { teamView ? '' : <div className='optionBtns flex-wrap col-sm-2'><button className='editButton btn close col-6' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon' icon={faEdit} /></button>
       <button className='tagButton btn close col-6' onClick={this.launchTagUserModal}><FontAwesomeIcon className='tagIcon' icon={faTags} /></button></div> }
+      <p className='text-right col-sm-2'>{dueDate}</p>
       </div>
     );
   }
