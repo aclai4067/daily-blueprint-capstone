@@ -4,15 +4,20 @@
     background-color: $translucentCream;
     border-radius: 5px;
     border: 2px solid cornsilk;
+    padding: .5em;
+    margin: 1.5em auto;
 
     .userDetails{
       margin: auto 0;
+      background-color: $dbpTaupe;
+      border-radius: 5px;
 
       .teamMemberImage{
         border-radius: 5px;
         border: 1px solid $translucentCream;
         max-height: 200px;
         max-width: 200px;
+        margin-top: .5em;
       }
     }
 }
