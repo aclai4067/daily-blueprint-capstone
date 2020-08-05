@@ -94,8 +94,8 @@ class Team extends React.Component {
           </form> }
         </div>
         {buildMemberPriorityCards}
-        <TeamMemberModal team={teamToDisplay} teamPriorities={teamPriorities} teamModalIsOpen={teamModalIsOpen} toggleTeamModal={this.toggleTeamModal}
-          orgId={user.organizationId} getAllTeamData={this.getAllTeamData} userId={user.id} />
+        { teamToDisplay.isTeamLead && <TeamMemberModal team={teamToDisplay} teamPriorities={teamPriorities} teamModalIsOpen={teamModalIsOpen} toggleTeamModal={this.toggleTeamModal}
+          orgId={user.organizationId} getAllTeamData={this.getAllTeamData} userId={user.id} /> }
       </div>
     );
   }
