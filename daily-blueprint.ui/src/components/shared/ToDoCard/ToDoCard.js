@@ -36,7 +36,7 @@ class ToDoCard extends React.Component {
 
     const buildToDos = toDos.length !== 0 ? toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal}
       setEditMode={setEditMode} setToTag={setToTag} updateToDos={updateToDos} userId={userId} />)
-      : <p>There Are No To-Dos To Display</p>;
+      : <p className='text-left offset-1 noToDo'>There Are No To-Dos To Display</p>;
 
     return (
       <div className='ToDoCard'>

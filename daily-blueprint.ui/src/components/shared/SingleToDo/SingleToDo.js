@@ -3,7 +3,12 @@ import './SingleToDo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTag, faEdit, faTags } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUserTag,
+  faEdit,
+  faLink,
+  faTags,
+} from '@fortawesome/free-solid-svg-icons';
 import Moment from 'moment';
 import toDoData from '../../../helpers/data/toDoData';
 
@@ -59,14 +64,14 @@ class SingleToDo extends React.Component {
             { teamView ? '' : <input className='col-1 completeCheck' type='checkbox' id={`completePriority-${toDo.priorityId}`} onChange={this.completeToDo} /> }
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.priorityId}`}>
               {toDo.description}
-              { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
+              { toDo.link !== '' && <a href={toDo.link} target='_blank'><FontAwesomeIcon className='ml-2 linkIcon' icon={faLink} /></a> }
               { toDo.taggedUsers[0] && <div className='tlTip'><FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /><ul className='tlTipText'>{buildTaggedUsers()}</ul></div> }
             </label>
           </form>] : [<form key={`toDoEntry-${toDo.id}`} className='col-sm-8'>
             <input className='col-1 completeCheck' type='checkbox' id={`completeToDo-${toDo.id}`} onChange={this.completeToDo} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.id}`}>
             {toDo.description}
-            { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
+            { toDo.link !== '' && <a href={toDo.link} target='_blank'><FontAwesomeIcon className='ml-2 linkIcon' icon={faLink} /></a> }
             { toDo.taggedUsers[0] && <div className='tlTip'><FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /><ul className='tlTipText'>{buildTaggedUsers()}</ul></div> }
             </label>
           </form>]

@@ -23,7 +23,7 @@ class TaggedCard extends React.Component {
     const buildTags = tags.length !== 0 ? tags.map((t) => <div key={`tagged-${t.tagId}`} className='d-flex justify-content-between' >
         <p className='col-11 text-left'>{t.ownerName} needs your assistance with: {t.description} { t.link !== '' && <span>({<a href={t.link} target='_blank'>Resource</a>})</span> }</p>
         <button value={t.tagId} className='col-1 removeTag close' onClick={this.removeTagEvent}>X</button>
-      </div>) : <p>You have not been tagged in any other user's to do items</p>;
+      </div>) : <p className='text-left offset-1 noTags'>You have not been tagged in any other user's to do items</p>;
 
     return (
       <div className='TaggedCard'>

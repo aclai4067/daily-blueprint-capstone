@@ -1,8 +1,16 @@
+@import '../../../styles/variables';
+
 .TaggedCard{
 
   padding: .5em 0;
 
   .removeTag{
     margin-bottom: 1em;
+  }
+
+  .noTags{
+    color: $dbpDarkTaupe;
+    font-size: 1.25em;
+    font-style: italic;
   }
 }

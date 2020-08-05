@@ -58,6 +58,7 @@
 
     .timerCountdown{
 
+      color: $translucentCream;
       position: absolute;
       width: 300px;
       height: 300px;
@@ -70,6 +71,9 @@
     }
 
     .timerBackground{
+
+      background-color: $dbpDarkTaupe;
+      border-radius: 999px;
 
       .timerCircle{
 

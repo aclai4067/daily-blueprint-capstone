@@ -41,11 +41,11 @@ class PriorityCard extends React.Component {
 
     const buildDailyPriorities = dailyCheck ? priorities.map((p) => p.type === 'daily'
       && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
-      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Daily Priorities To Display</p>;
+      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p className='text-left offset-1 noPriority'>No Daily Priorities To Display</p>;
 
     const buildWeeklyPriorities = weeklyCheck ? priorities.map((p) => p.type === 'weekly'
       && <SingleToDo key={`priority-${p.priorityId}`} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal} fromPriority={true} toDo={p} setEditMode={setEditMode}
-      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p>No Weekly Priorities To Display</p>;
+      setToTag={setToTag} teamView={teamView} updateToDos={updateToDos} userId={userId} />) : <p className='text-left offset-1 noPriority'>No Weekly Priorities To Display</p>;
 
     return (
       <div className='PriorityCard'>

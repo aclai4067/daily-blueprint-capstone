@@ -1,3 +1,5 @@
+@import '../../../styles/variables';
+
 .ToDoCard{
 
   padding: .5em 0;
@@ -5,5 +7,11 @@
   .completeCheck{
     height: 1em;
     width: 1em;
+  }
+
+  .noToDo{
+    color: $dbpDarkTaupe;
+    font-size: 1.25em;
+    font-style: italic;
   }
 }
