@@ -50,6 +50,8 @@ class SingleToDo extends React.Component {
     const { toDo, fromPriority, teamView } = this.props;
     const dueDate = Moment(toDo.dateDue).format('MM/DD/YY');
 
+    const buildTaggedUsers = () => toDo.taggedUsers.map((u) => <li>{`${u.firstName} ${u.lastName}`}</li>);
+
     return (
       <div className='SingleToDo d-flex justify-content-between'>
         { fromPriority ? [
@@ -58,14 +60,14 @@ class SingleToDo extends React.Component {
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.priorityId}`}>
               {toDo.description}
               { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
-              { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> }
+              { toDo.taggedUsers[0] && <div className='tlTip'><FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /><ul className='tlTipText'>{buildTaggedUsers()}</ul></div> }
             </label>
           </form>] : [<form key={`toDoEntry-${toDo.id}`} className='col-sm-8'>
             <input className='col-1 completeCheck' type='checkbox' id={`completeToDo-${toDo.id}`} onChange={this.completeToDo} />
             <label className='col-11 text-left' htmlFor={`completeToDo-${toDo.id}`}>
             {toDo.description}
             { toDo.link !== '' && <span> ({<a href={toDo.link} target='_blank'>Resource</a>})</span> }
-            { toDo.taggedUsers[0] && <FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /> }
+            { toDo.taggedUsers[0] && <div className='tlTip'><FontAwesomeIcon className='ml-2 taggedIcon' icon={faUserTag} /><ul className='tlTipText'>{buildTaggedUsers()}</ul></div> }
             </label>
           </form>]
         }
