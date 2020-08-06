@@ -237,7 +237,7 @@ class ToDoModal extends React.Component {
               </div>
               <div className='form-group'>
                 <label htmlFor='priorityTypeInput'>Is This a Priority?</label>
-                <select className='form-control' id='priorityTypeInput' value={priority.type} onChange={this.typeChange}>
+                <select className='form-control priorityStatusInput' id='priorityTypeInput' value={priority.type} onChange={this.typeChange}>
                   <option value='' defaultValue>Not a Priority</option>
                   <option value='daily'>Priority - Address Within The Next Day</option>
                   <option value='weekly'>Priority - Address Within The Next Week</option>
