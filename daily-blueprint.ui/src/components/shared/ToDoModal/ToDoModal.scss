@@ -20,6 +20,12 @@
         border-style: inset;
       }
 
+      .completedCheckbox{
+        height: 1em;
+        width: 1em;
+        margin: .25em;
+      }
+
       .btn-secondary{
         background-color: $dbpNavy;
         border-style: outset;

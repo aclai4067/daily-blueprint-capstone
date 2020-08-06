@@ -119,7 +119,7 @@ class TagModal extends React.Component {
           <ModalBody>
             <div>
               <form className='unassignedUsers d-flex flex-wrap'>
-                <h5>Tag Others</h5>
+                <h5 className='col-12'>Tag Others</h5>
                 <select className='form-control userToTagInput' id='tagUserInput' value={userToAdd} onChange={this.userToAddChange}>
                   <option value='' disabled defaultValue>Select A Coworker To Tag</option>
                   {this.buildStaffDropdown()}

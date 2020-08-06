@@ -101,7 +101,7 @@ class TeamMemberModal extends React.Component {
     this.setState({ userToAdd: userId });
   }
 
-  buildTeamList = () => this.state.teamMembers.map((t) => <div key={`teamMember-${t.id}`} className='col-sm-4 d-flex'><p>{`${t.firstName} ${t.lastName}`}</p>
+  buildTeamList = () => this.state.teamMembers.map((t) => <div key={`teamMember-${t.id}`} className='currentTeammate col-5 d-flex'><p>{`${t.firstName} ${t.lastName}`}</p>
       <button className='btn close' value={t.id} onClick={this.deleteTeamMate}>X</button></div>);
 
   buildStaffDropdown = () => this.state.unassignedUsers.map((u) => <option key={`staff-${u.id}`} value={u.id}>{`${u.firstName} ${u.lastName}`}</option>);
@@ -122,7 +122,8 @@ class TeamMemberModal extends React.Component {
           <ModalBody>
             <div>
               <form className='unassignedUsers'>
-                <select className='form-control' id='userInput' value={userToAdd} onChange={this.userToAddChange}>
+                <h5 className='col-12'>Add New Team Members</h5>
+                <select className='form-control newTeammateInput' id='userInput' value={userToAdd} onChange={this.userToAddChange}>
                   <option value='' disabled defaultValue>Select a Team Member</option>
                   {this.buildStaffDropdown()}
                 </select>
@@ -134,7 +135,8 @@ class TeamMemberModal extends React.Component {
                   <button className='btn btn-secondary' onClick={this.addTeamMate}>Add</button>
                 </div>
               </form>
-              <div className='teamMemembers d-flex flex-wrap'>
+              <div className='teamMembers d-flex flex-wrap'>
+                <h5 className='col-12'>Current Team Members</h5>
                 {this.buildTeamList()}
               </div>
               <Button className='dismissModal' onClick={this.dismissTeamModal}>Done</Button>
