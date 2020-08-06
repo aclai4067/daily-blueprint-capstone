@@ -12,6 +12,11 @@
 
   .linkIcon{
     color: $dbpNavy;
+    opacity: .8;
+
+    &:hover{
+      opacity: 1;
+    }
   }
 
   .tlTip {

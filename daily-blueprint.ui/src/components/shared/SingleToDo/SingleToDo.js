@@ -76,8 +76,8 @@ class SingleToDo extends React.Component {
             </label>
           </form>]
         }
-      { teamView ? '' : <div className='optionBtns flex-wrap col-sm-2'><button className='editButton btn close col-6' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon' icon={faEdit} /></button>
-      <button className='tagButton btn close col-6' onClick={this.launchTagUserModal}><FontAwesomeIcon className='tagIcon' icon={faTags} /></button></div> }
+      { teamView ? '' : <div className='optionBtns flex-wrap col-sm-2'><button className='editButton btn close col-6' onClick={this.launchEditModal}><FontAwesomeIcon className='editIcon'
+      icon={faEdit} /></button> <button className='tagButton btn close col-6' onClick={this.launchTagUserModal}><FontAwesomeIcon className='tagIcon' icon={faTags} /></button></div> }
       <p className='text-right col-sm-2'>{dueDate}</p>
       </div>
     );
