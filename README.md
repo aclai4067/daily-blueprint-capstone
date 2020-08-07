@@ -22,31 +22,48 @@
 
 ## Screenshots
 Logged Out View
-![Landing Page For Logged Out User](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpLogin.png)
+
+![Landing Page For Logged Out User](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPLogin.png)
+
 
 Logged In Home
-![Landing Page For Logged In User - Home](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpDashboard.png)
+
+![Landing Page For Logged In User - Home](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPDashboard.png)
+
 
 To Do or Priority Create/Edit Modal
-![Form to Create or Edit To Dos and Priorities](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpCreateEditToDoModal.png)
+
+![Form to Create or Edit To Dos and Priorities](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPCreateEditToDoModal.png)
+
 
 Tag Users
-![Modal to Tag Other Users in To Dos or Priorities](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpTagModal.png)
+
+![Modal to Tag Other Users in To Dos or Priorities](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPTagModal.png)
+
 
 Team View
-![Team Priorities Page](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpTeamView.png)
+
+![Team Priorities Page](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPTeamView.png)
+
 
 Edit Team - Team Lead View Only
-![Team Leads May Add or Remove Team Members](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpEditTeamModal.png)
+
+![Team Leads May Add or Remove Team Members](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPEditTeamModal.png)
+
 
 Pomodoro Info
-![What is Pomodoro? Modal](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpPomodoroInfoModal.png)
+
+![What is Pomodoro? Modal](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPPomodoroInfoModal.png)
+
 
 Pomodoro Active
-![Pomodoro Timer Counting Down Work Session](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dbpPomodoro.png)
+
+![Pomodoro Timer Counting Down Work Session](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPPomodoro.png)
+
 
 Pomodoro Edit Mode
-![Pomodoro Timer Settings Can be Adjusted](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/dpbPomodoroEdit.png)
+
+![Pomodoro Timer Settings Can be Adjusted](https://raw.githubusercontent.com/aclai4067/daily-blueprint-capstone/master/screenshots/DBPPomodoroEdit.png)
 
 
 ## Contributors
