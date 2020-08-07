@@ -1,6 +1,25 @@
+@import '../../../styles/variables';
+
 .TaggedCard{
+
+  padding: .5em 0;
 
   .removeTag{
     margin-bottom: 1em;
+  }
+
+  .linkIcon{
+    color: $dbpNavy;
+    opacity: .8;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
+  .noTags{
+    color: $dbpDarkTaupe;
+    font-size: 1.25em;
+    font-style: italic;
   }
 }

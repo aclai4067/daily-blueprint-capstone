@@ -1,0 +1,44 @@
+@import '../../../styles/variables';
+
+.editTagModal{
+
+  .modal-content{
+
+    background-color: $dbpTaupe;
+    border: 2px outset $dbpDarkTaupe;
+    border-radius: 8px;
+    color: $dbpNavy;
+
+    .unassignedUsers, .taggedUsers{
+      margin: 0 .25em 1em .25em;
+    }
+
+    .userToTagInput{
+      background-color: $translucentCream;
+      border-style: inset;
+      margin: .5em auto;
+    }
+
+    .currentTags{
+      background-color: $translucentCream;
+      border: 1px solid $dbpDarkTaupe;
+      border-radius: 15px;
+      padding: .5em auto;
+      margin: .25em;
+
+      p{
+        margin: .5em;
+      }
+    }
+
+    .btn-secondary{
+      background-color: $dbpNavy;
+      border-style: outset;
+      opacity: .8;
+
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+}

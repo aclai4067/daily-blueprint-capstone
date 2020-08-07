@@ -1,0 +1,15 @@
+@import '../../../styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Lemonada:wght@500&family=Permanent+Marker&display=swap');
+
+.Team{
+
+  h2{
+    font-family: 'Permanent Marker', cursive;
+    margin: 1em 0;
+  }
+
+  .teamSelect{
+    background-color: $translucentCream;
+    margin: 2em 0;
+  }
+}

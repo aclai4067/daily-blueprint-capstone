@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Lemonada:wght@500&family=Permanent+Marker&display=swap');
+
+.pomodoroInfoModal{
+
+  .modal-content{
+
+    background-color: cornsilk;
+    border: 2px outset $dbpDarkTaupe;
+    border-radius: 8px;
+    color: $dbpNavy;
+
+    h3{
+      margin-bottom: .5em;
+      font-family: 'Permanent Marker', cursive;
+    }
+
+    p{
+      margin: 1em 0;
+    }
+
+    .btn-secondary{
+      background-color: $dbpNavy;
+      border-style: outset;
+      opacity: .8;
+
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -101,7 +101,7 @@ class TagModal extends React.Component {
     this.setState({ userToAdd: userId });
   }
 
-  buildTaggedList = () => this.state.tagged.map((t) => <div key={`tagged-${t.tagId}`} className='col-sm-4 d-flex'><p>{`${t.firstName} ${t.lastName}`}</p>
+  buildTaggedList = () => this.state.tagged.map((t) => <div key={`tagged-${t.tagId}`} className='col-5 d-flex currentTags'><p>{`${t.firstName} ${t.lastName}`}</p>
       <button className='btn close' value={t.tagId} onClick={this.deleteTag}>X</button></div>);
 
   buildStaffDropdown = () => this.state.unassignedUsers.map((u) => <option key={`tagStaff-${u.id}`} value={u.id}>{`${u.firstName} ${u.lastName}`}</option>);
@@ -119,8 +119,8 @@ class TagModal extends React.Component {
           <ModalBody>
             <div>
               <form className='unassignedUsers d-flex flex-wrap'>
-                <h5>Tag Others</h5>
-                <select className='form-control' id='tagUserInput' value={userToAdd} onChange={this.userToAddChange}>
+                <h5 className='col-12'>Tag Others</h5>
+                <select className='form-control userToTagInput' id='tagUserInput' value={userToAdd} onChange={this.userToAddChange}>
                   <option value='' disabled defaultValue>Select A Coworker To Tag</option>
                   {this.buildStaffDropdown()}
                 </select>
@@ -129,7 +129,7 @@ class TagModal extends React.Component {
                 </div>
               </form>
               <div className='taggedUsers d-flex flex-wrap'>
-                <h5>Tagged</h5>
+                <h5 className='col-12'>Tagged</h5>
                 {this.buildTaggedList()}
               </div>
               <Button className='dismissModal' onClick={this.dismissTagModal}>Done</Button>

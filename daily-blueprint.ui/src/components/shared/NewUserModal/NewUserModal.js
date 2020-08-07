@@ -1,6 +1,11 @@
 import './NewUserModal.scss';
 import React from 'react';
-import { Button, Modal, ModalBody } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import PropTypes from 'prop-types';
@@ -116,10 +121,10 @@ class NewUserModal extends React.Component {
                   {buildOrgOptions}
                 </select>
               </div>
-              <div className='d-flex justify-content-between'>
-                <Button className='addUserBtn' onClick={this.createUserEvent}>Create Account &amp; Login with Google</Button>{' '}
-                <Button className='dismissModal' onClick={toggleModal}>Cancel</Button>
-              </div>
+              <ModalFooter className='d-flex justify-content-between'>
+                <Button className='addUserBtn btn-secondary' onClick={this.createUserEvent}>Create Account &amp; Login with Google</Button>{' '}
+                <Button className='dismissModal btn-secondary' onClick={toggleModal}>Cancel</Button>
+              </ModalFooter>
             </form>
           </ModalBody>
         </Modal>

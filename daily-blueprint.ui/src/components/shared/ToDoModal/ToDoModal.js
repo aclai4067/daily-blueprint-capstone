@@ -1,6 +1,11 @@
 import './ToDoModal.scss';
 import React from 'react';
-import { Button, Modal, ModalBody } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalFooter,
+} from 'reactstrap';
 import Moment from 'moment';
 import PropTypes from 'prop-types';
 import toDoData from '../../../helpers/data/toDoData';
@@ -237,7 +242,7 @@ class ToDoModal extends React.Component {
               </div>
               <div className='form-group'>
                 <label htmlFor='priorityTypeInput'>Is This a Priority?</label>
-                <select className='form-control' id='priorityTypeInput' value={priority.type} onChange={this.typeChange}>
+                <select className='form-control priorityStatusInput' id='priorityTypeInput' value={priority.type} onChange={this.typeChange}>
                   <option value='' defaultValue>Not a Priority</option>
                   <option value='daily'>Priority - Address Within The Next Day</option>
                   <option value='weekly'>Priority - Address Within The Next Week</option>
@@ -247,10 +252,10 @@ class ToDoModal extends React.Component {
                 <input type='checkbox' className='completedCheckbox' data-val='true' id='isCompleteInput' checked={toDo.isComplete} onChange={this.isCompleteChange} />
                 <label htmlFor='isCompleteInput'className='ml-1'>Completed</label>
               </div>
-              <div className='d-flex justify-content-between'>
+              <ModalFooter className='d-flex justify-content-between'>
                 { editMode ? <Button className='UpdateToDoBtn' onClick={this.updateToDoEvent}>Update</Button> : <Button className='addToDoBtn' onClick={this.createToDoEvent}>Save</Button> }
                 <Button className='dismissModal' onClick={this.resetOnDismiss}>Cancel</Button>
-              </div>
+              </ModalFooter>
             </form>
           </ModalBody>
         </Modal>

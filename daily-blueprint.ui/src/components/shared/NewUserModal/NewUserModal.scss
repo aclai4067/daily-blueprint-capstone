@@ -1,6 +1,39 @@
-.newUserForm{
-  span{
-    color: red;
-    font-size: .7em;
+@import '../../../styles/variables';
+
+.createUserModal{
+
+  .modal-content{
+
+    background-color: $dbpTaupe;
+    border: 2px outset $dbpDarkTaupe;
+    border-radius: 8px;
+    color: $dbpNavy;
+
+    .form-group{
+      margin: 0 .25em 1em .25em;
+    }
+
+    .newUserForm{
+
+      input{
+        background-color: $translucentCream;
+        border-style: inset;
+      }
+
+      span{
+        color: red;
+        font-size: .7em;
+      }
+
+      .btn-secondary{
+        background-color: $dbpNavy;
+        border-style: outset;
+        opacity: .8;
+
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
   }
 }

@@ -1,0 +1,40 @@
+@import '../../../styles/variables';
+
+.createToDoModal{
+
+  .modal-content{
+
+    background-color: $dbpTaupe;
+    border: 2px outset $dbpDarkTaupe;
+    border-radius: 8px;
+    color: $dbpNavy;
+
+    .toDoForm{
+
+      .form-group{
+        margin: 0 .25em 1em .25em;
+      }
+
+      input, .priorityStatusInput{
+        background-color: $translucentCream;
+        border-style: inset;
+      }
+
+      .completedCheckbox{
+        height: 1em;
+        width: 1em;
+        margin: .25em;
+      }
+
+      .btn-secondary{
+        background-color: $dbpNavy;
+        border-style: outset;
+        opacity: .8;
+
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

@@ -82,12 +82,12 @@ class Team extends React.Component {
           <h2 className='todaysDate text-left'>{currentDate}</h2>
           <div>
             <h2 className='teamName'>{teamToDisplay.teamName}</h2>
-            { !teamToDisplay.isPrimary && <button className='btn btn-outline-light' onClick={this.changePrimaryTeam}>Make Primary</button> }
-            { teamToDisplay.isTeamLead && <button className='btn btn-outline-light' onClick={this.toggleTeamModal}>Edit Team</button> }
+            { !teamToDisplay.isPrimary && <button className='btn btn-outline-secondary' onClick={this.changePrimaryTeam}>Make Primary</button> }
+            { teamToDisplay.isTeamLead && <button className='btn btn-outline-secondary ml-3' onClick={this.toggleTeamModal}>Edit Team</button> }
 
           </div>
           { teams.length > 1 && <form>
-            <select className='form-control mt-1' id='selectedTeam' value='' onChange={this.updateTeamDisplay}>
+            <select className='form-control teamSelect' id='selectedTeam' value='' onChange={this.updateTeamDisplay}>
               <option value='' disabled>Change Team</option>
               {buildTeamOptions}
             </select>

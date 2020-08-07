@@ -10,6 +10,15 @@
     }
   }
 
+  .linkIcon{
+    color: $dbpNavy;
+    opacity: .8;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
   .tlTip {
     position: relative;
     display: inline-block;
@@ -32,5 +41,15 @@
         display: inline-block;
       }
     }
+  }
+
+  .optionBtns{
+    display: none;
+  }
+
+  &:hover{
+    .optionBtns{
+      display: flex;
+    } 
   }
 }

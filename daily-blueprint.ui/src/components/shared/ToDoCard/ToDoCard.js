@@ -36,14 +36,14 @@ class ToDoCard extends React.Component {
 
     const buildToDos = toDos.length !== 0 ? toDos.map((t) => <SingleToDo key={`toDo-${t.id}`} toDo={t} launchToDoModal={this.launchToDoModal} launchTagModal={this.launchTagModal}
       setEditMode={setEditMode} setToTag={setToTag} updateToDos={updateToDos} userId={userId} />)
-      : <p>There Are No To-Dos To Display</p>;
+      : <p className='text-left offset-1 noToDo'>There Are No To-Dos To Display</p>;
 
     return (
       <div className='ToDoCard'>
         <h3>To Do</h3>
         {buildToDos}
         <div className='d-flex justify-content-end'>
-          <button className='btn btn-outline-dark  pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>
+          <button className='btn btn-outline-secondary newToDoBtn pt-0 pb-0 m-1' onClick={this.launchToDoModal} >New</button>
         </div>
       </div>
     );

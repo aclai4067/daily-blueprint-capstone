@@ -98,7 +98,7 @@ class Home extends React.Component {
 
     return (
       <div className='Home'>
-        <div className="personalToDos d-flex justify-content-around flex-wrap">
+        <div className="personalToDos d-flex justify-content-around flex-wrap mt-3">
           <h2 className='todaysDate text-left col-sm-7'><Moment format='dddd, LL'>{today}</Moment></h2>
           <div className='userDetails col-sm-4 offset-sm-1 d-flex justify-content-end'>
             <div className='userNameTitle text-right'>
@@ -112,7 +112,7 @@ class Home extends React.Component {
               <PriorityCard priorities={priorities} toggleToDoModal={this.toggleToDoModal} setFromPriority={this.setFromPriority} setToTag={this.setToTag}
                 toggleTagModal={this.toggleTagModal} fromPriority={fromPriority} setEditMode={this.setEditMode} updateToDos={this.getUserToDoAndPriorities} userId={user.id} />
             </div>
-            <div className='dashboardCards col-12 mt-3'>
+            <div className='dashboardCards col-12 mt-3 mb-3'>
               <TaggedCard tags={tags} removeTag={this.removeTag}></TaggedCard>
             </div>
           </div>
